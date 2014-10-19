@@ -1,0 +1,25 @@
+<!DOCTYPE hibernate-configuration PUBLIC 
+    "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://77.47.209.171:3306/hospital</property>
+    <property name="hibernate.connection.username">admin</property>
+    <property name="hibernate.connection.password">zxc123</property>
+    <property name="connection.pool_size">10</property>
+    <property name="dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="show_sql">true</property>
+    <property name="hbm2ddl.auto">update</property>
+    <property name="hibernate.connection.autocommit">false</property>
+    <property name="current_session_context_class">thread</property>
+
+    
+    <mapping class="Hibernate.Users"/>
+    <mapping class="Hibernate.Card"/>
+    <mapping class="Hibernate.Diagnosis"/>
+    <mapping class="Hibernate.Group"/>
+    <mapping class="Hibernate.Notes"/>
+    <mapping class="Hibernate.Session"/>
+  </session-factory>
+</hibernate-configuration>
