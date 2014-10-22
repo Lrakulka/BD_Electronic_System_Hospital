@@ -1,9 +1,14 @@
-package Hibernate;
+package hibernate;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
@@ -14,6 +19,7 @@ public class Group {
 	private Integer id;
 	private String name;
 	private Integer group_id;
+	//private Set<Diagnosis> diagnosis = new HashSet<>();
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
@@ -29,6 +35,12 @@ public class Group {
 	public Integer getGroup_id() {
 		return group_id;
 	}
+	/*
+	@OneToMany
+	@JoinTable(name="group_id")
+	public Set<Diagnosis> getDiagnosis() {
+		return diagnosis;
+	}*/
 	public void setId(Integer id) {
 		this.id = id;
 	}

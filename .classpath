@@ -50,5 +50,6 @@
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/required/hibernate-core-4.3.6.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/required/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/rt.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

@@ -1,4 +1,7 @@
 package logic;
+import hibernate.Users;
+import hibernateConnect.DatabaseConnect;
+
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -6,14 +9,14 @@ import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Order;
 
-import Exceptions.ProjectException;
-import Hibernate.Users;
-import HibernateConnect.DatabaseConnect;
+import exceptions.ProjectException;
 
-public class DatabaseAdminOperations {
+
+
+public class OperationsWithUsers {
 	public static boolean delete(Users user) {
 		if ((user = isUserRegisted(user)) == null)
 			return false;
@@ -41,15 +44,15 @@ public class DatabaseAdminOperations {
 		try {
 			session = DatabaseConnect.getSessionFactory().openSession();
 			List<Users> users = session.createCriteria(Users.class).add( 
-					Expression.like("name", user.getName())).list();
+					Restrictions.like("name", user.getName())).list();
 			if ( users.isEmpty()) {
 				Transaction transaction = session.beginTransaction();				
 	            session.save(user);
 	            transaction.commit();
 			}
 			else return false;
-		} catch (HibernateException e){
-			Exceptions.ProjectException.sentExceptionMassege("Problem " +
+		} catch (HibernateException e) {
+			exceptions.ProjectException.sentExceptionMassege("Problem " +
 					e.getMessage());
 			return false;
 		} finally {
@@ -65,20 +68,20 @@ public class DatabaseAdminOperations {
 		try {
 			session = DatabaseConnect.getSessionFactory().openSession();
 			List<Users> users = session.createCriteria(Users.class).add( 
-					Expression.like("name", user.getName())).add(
-					Expression.like("pwd", user.getPwd())).list();
+					Restrictions.like("name", user.getName())).add(
+					Restrictions.like("pwd", user.getPwd())).list();
 			switch (users.size()) {
 				case 0 : return null;
 				case 1 : user = users.get(0); break;
 				default : throw new ProjectException(String.valueOf(users.size()) +
 						" identical records");
 			}
-		} catch (HibernateException e){
-			Exceptions.ProjectException.sentExceptionMassege("Problem " +
+		} catch (HibernateException e) {
+			exceptions.ProjectException.sentExceptionMassege("Problem " +
 		e.getMessage());
 			return null;
 		} catch (ProjectException e) {
-			Exceptions.ProjectException.sentExceptionMassege("Problem " +
+			exceptions.ProjectException.sentExceptionMassege("Problem " +
 					e.getMessage());
 		} finally {
 			if(session != null && session.isOpen()) {
@@ -123,9 +126,9 @@ public class DatabaseAdminOperations {
         List<Users> users = null;
         try {
             session = DatabaseConnect.getSessionFactory().openSession();
-            users = session.createCriteria(Users.class).add(Expression.like("name", 
-            		"%" + name + "%")).add(Expression.like("phone", "%" + 
-            		phone + "%")).add(Expression.between("access_level", 
+            users = session.createCriteria(Users.class).add(Restrictions.like("name", 
+            		"%" + name + "%")).add(Restrictions.like("phone", "%" + 
+            		phone + "%")).add(Restrictions.between("access_level", 
             		access_levelLow, access_levelHight)).addOrder(Order.asc("name")
             				).list();
         } catch (Exception e) {
@@ -139,7 +142,7 @@ public class DatabaseAdminOperations {
         return users;
 	}
 	
-	public static void deleteAllUsers(){
+	public static void deleteAllUsers() {
 		for(Users user:getAllUsers())
 			delete(user);
 	}

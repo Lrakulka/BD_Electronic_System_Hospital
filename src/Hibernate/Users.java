@@ -1,4 +1,4 @@
-package Hibernate;
+package hibernate;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -61,11 +61,12 @@ public class Users {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}	
-		/*byte[] h = String.valueOf(c.digest(pwd.getBytes())).getBytes();
+		byte[] h = c.digest(pwd.getBytes());
 		StringBuffer pass = new StringBuffer();
+		
 		for(int i = 0; i < h.length; ++i)
 			pass.append(Integer.toHexString(h[i]));
-		this.pwd = pass.toString();*/
+		this.pwd = pass.toString();
 		this.pwd = pwd;
 	}
 

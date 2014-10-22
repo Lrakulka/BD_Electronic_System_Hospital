@@ -1,4 +1,4 @@
-package Hibernate;
+package hibernate;
 
 import java.sql.Date;
 

@@ -1,4 +1,4 @@
-package PagesServlets;
+package pagesServlets;
 
 import java.io.IOException;
 
@@ -16,7 +16,7 @@ public class AuthorizeServlet extends HttpServlet{
 	 
 	        String userName = request.getParameter("userName");
 	        String password = request.getParameter("password");
-	 
+	        response.sendRedirect("NewFile.jsp");
 	       // HttpSession session = request.getSession(true);
 	        try {
 	        	/*

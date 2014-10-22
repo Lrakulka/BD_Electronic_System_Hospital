@@ -1,8 +1,9 @@
 package logic;
 
+import hibernate.Users;
+
 import java.util.List;
 
-import Hibernate.Users;
 
 public class Test {
 
@@ -18,8 +19,8 @@ public class Test {
 		user.setPwd("00000");
 		//DatabaseAdminOperations.register(user);
 		//DatabaseAdminOperations.delete(user);
-		DatabaseAdminOperations.deleteAllUsers();
-		List <Users> users = DatabaseAdminOperations.getAllUsers();
+		OperationsWithUsers.deleteAllUsers();
+		List <Users> users = OperationsWithUsers.getAllUsers();
 		for(Users curUser : users){
 			System.out.println("Name=" + curUser.getName() + " Pwd=" +
 					curUser.getPwd() + " Phone=" + curUser.getPhone() + " Eccess_level=" +

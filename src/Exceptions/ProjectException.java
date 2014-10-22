@@ -1,4 +1,4 @@
-package Exceptions;
+package exceptions;
 
 public class ProjectException extends Exception {
 	private String e;

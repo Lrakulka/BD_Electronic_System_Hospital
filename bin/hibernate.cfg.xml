@@ -15,11 +15,11 @@
     <property name="current_session_context_class">thread</property>
 
     
-    <mapping class="Hibernate.Users"/>
-    <mapping class="Hibernate.Card"/>
-    <mapping class="Hibernate.Diagnosis"/>
-    <mapping class="Hibernate.Group"/>
-    <mapping class="Hibernate.Notes"/>
-    <mapping class="Hibernate.Session"/>
+    <mapping class="hibernate.Users"/>
+    <mapping class="hibernate.Card"/>
+    <mapping class="hibernate.Diagnosis"/>
+    <mapping class="hibernate.Group"/>
+    <mapping class="hibernate.Notes"/>
+    <mapping class="hibernate.Session"/>
   </session-factory>
 </hibernate-configuration>

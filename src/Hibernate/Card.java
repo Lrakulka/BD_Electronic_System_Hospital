@@ -1,4 +1,4 @@
-package Hibernate;
+package hibernate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,20 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.eclipse.jdt.internal.compiler.ast.ThisReference;
 import org.hibernate.annotations.GenericGenerator;
-
-enum Gender {
-		MALE,
-		FEMALE;
-		public String getGenderName(){  
-			  switch (this){  
-			   case MALE : return "Man";  
-			   case FEMALE : return "Woman";  
-			   default : return null;  
-			  }  
-			 }  
-};
 
 @Entity
 @Table(name="card")
@@ -61,5 +48,22 @@ public class Card {
 	}
 	public void setSex(Gender sex) {
 		this.sex = sex;
+	}
+	
+	public Card() {
+		// TODO Auto-generated constructor stub
+	}
+	 
+	public Card(String name, Integer age, Gender sex) {
+		// TODO Auto-generated constructor stub
+		this.age = age;
+		this.name = name;
+		this.sex = sex;
+	}
+	
+	public boolean equals(Card card) {
+		if ( card.age == age && card.name.equals(name) && card.sex == sex)
+			return true;
+		else return false;
 	}
 }
