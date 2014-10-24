@@ -7,12 +7,16 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="session")
 public class Session {
 	private Integer id;
 	private Integer card_id;
+	@Type(type = "boolean")
+	private Boolean result; 
+	private Integer diagnos_id;
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
@@ -30,7 +34,7 @@ public class Session {
 	}
 	@Column(name="diagnosis_id")
 	public Integer getDiagnosis_id() {
-		return diagnosis_id;
+		return diagnos_id;
 	}
 	public void setId(Integer id) {
 		this.id = id;
@@ -42,8 +46,6 @@ public class Session {
 		this.result = result;
 	}
 	public void setDiagnosis_id(Integer diagnosis_id) {
-		this.diagnosis_id = diagnosis_id;
+		this.diagnos_id = diagnosis_id;
 	}
-	private Boolean result;
-	private Integer diagnosis_id;
 }

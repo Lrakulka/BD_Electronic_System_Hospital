@@ -1,5 +1,5 @@
 package logic;
-import hibernate.Users;
+import hibernate.User;
 import hibernateConnect.DatabaseConnect;
 
 import java.util.List;
@@ -16,8 +16,8 @@ import exceptions.ProjectException;
 
 
 
-public class OperationsWithUsers {
-	public static boolean delete(Users user) {
+public class OperationsWithUser {
+	public static boolean delete(User user) {
 		if ((user = isUserRegisted(user)) == null)
 			return false;
 		else {
@@ -39,11 +39,11 @@ public class OperationsWithUsers {
 		}
 	}
 	
-	public static boolean register(Users user) {
+	public static boolean register(User user) {
 		Session session = null;
 		try {
 			session = DatabaseConnect.getSessionFactory().openSession();
-			List<Users> users = session.createCriteria(Users.class).add( 
+			List<User> users = session.createCriteria(User.class).add( 
 					Restrictions.like("name", user.getName())).list();
 			if ( users.isEmpty()) {
 				Transaction transaction = session.beginTransaction();				
@@ -63,11 +63,11 @@ public class OperationsWithUsers {
 		return true;
 	}	
 	
-	public static Users isUserRegisted(Users user) {
+	public static User isUserRegisted(User user) {
 		Session session = null;
 		try {
 			session = DatabaseConnect.getSessionFactory().openSession();
-			List<Users> users = session.createCriteria(Users.class).add( 
+			List<User> users = session.createCriteria(User.class).add( 
 					Restrictions.like("name", user.getName())).add(
 					Restrictions.like("pwd", user.getPwd())).list();
 			switch (users.size()) {
@@ -91,8 +91,8 @@ public class OperationsWithUsers {
 		return user;
 	}
 	
-	public static boolean update(Users user) {
-		Users curUser = user;
+	public static boolean update(User user) {
+		User curUser = user;
 		if ((curUser = isUserRegisted(curUser)) == null)
 			return false;
 		else {
@@ -115,18 +115,17 @@ public class OperationsWithUsers {
 		}
 	}
 	 
-	public static List<Users> getAllUsers() {
+	public static List<User> getAllUsers() {
 		return getAllUsersFiltr("", "", new Short((short) 0), new Short((short)2));
 	}
 	
-	@SuppressWarnings({"deprecation", "unchecked" })
-	public static List<Users> getAllUsersFiltr(String name, 
+	public static List<User> getAllUsersFiltr(String name, 
 			String phone, Short access_levelLow, Short access_levelHight) {
 		Session session = null;
-        List<Users> users = null;
+        List<User> users = null;
         try {
             session = DatabaseConnect.getSessionFactory().openSession();
-            users = session.createCriteria(Users.class).add(Restrictions.like("name", 
+            users = session.createCriteria(User.class).add(Restrictions.like("name", 
             		"%" + name + "%")).add(Restrictions.like("phone", "%" + 
             		phone + "%")).add(Restrictions.between("access_level", 
             		access_levelLow, access_levelHight)).addOrder(Order.asc("name")
@@ -143,7 +142,7 @@ public class OperationsWithUsers {
 	}
 	
 	public static void deleteAllUsers() {
-		for(Users user:getAllUsers())
+		for(User user:getAllUsers())
 			delete(user);
 	}
 }

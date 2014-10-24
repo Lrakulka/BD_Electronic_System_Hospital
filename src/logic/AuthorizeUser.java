@@ -1,12 +1,12 @@
 package logic;
 
-import hibernate.Users;
+import hibernate.User;
 
 public class AuthorizeUser {
-	private static Users authorizeUser = null;
+	private static User authorizeUser = null;
 	
-	public static boolean authorize(Users user) {
-		if (((user = OperationsWithUsers.isUserRegisted(user)) != null)
+	public static boolean authorize(User user) {
+		if (((user = OperationsWithUser.isUserRegisted(user)) != null)
 				&& (user.getAccess_level() == 2)){   // User with admin rights
 				authorizeUser = user;
 				return true;
@@ -14,7 +14,7 @@ public class AuthorizeUser {
 		else return false;
 	}
 	
-	public static Users getAuthorizeUser() {
+	public static User getAuthorizeUser() {
 		return authorizeUser;
 	}
 	

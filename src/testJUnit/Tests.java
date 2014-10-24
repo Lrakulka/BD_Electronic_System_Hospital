@@ -2,96 +2,101 @@ package testJUnit;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import hibernate.Card;
 import hibernate.Gender;
-import hibernate.Users;
+import hibernate.Note;
+import hibernate.User;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import logic.OperationsWithCard;
-import logic.OperationsWithUsers;
+import logic.OperationsWithUser;
 
 import org.junit.Test;
 
 
 public class Tests {
 
-	ArrayList<Users> users;
+	ArrayList<User> users;
 	ArrayList<Card> cards;
+	ArrayList<Note> notes;
 	
 	public Tests() {
 		// TODO Auto-generated constructor stub
 		users = new ArrayList<>();
-		users.add(new Users("Porky1",(short) 0, "134321223", "1111"));
-		users.add(new Users("Porky2",(short) 1, "132135223", "0000"));
-		users.add(new Users("Porky3",(short) 2, "134633432", "jsfn"));
-		users.add(new Users("Porky4",(short) 2, "435446333", "sdfg"));
-		users.add(new Users("Porky5",(short) 1, "123456789", "dsgd"));
-		users.add(new Users("Porky6",(short) 0, "444325252", "dsfd"));
-		users.add(new Users("Porky7",(short) 0, "657345434", "dsfs"));
+		users.add(new User("Porky1",(short) 0, "134321223", "1111"));
+		users.add(new User("Porky2",(short) 1, "132135223", "0000"));
+		users.add(new User("Porky3",(short) 2, "134633432", "jsfn"));
+		users.add(new User("Porky4",(short) 2, "435446333", "sdfg"));
+		users.add(new User("Porky5",(short) 1, "123456789", "dsgd"));
+		users.add(new User("Porky6",(short) 0, "444325252", "dsfd"));
+		users.add(new User("Porky7",(short) 0, "657345434", "dsfs"));
 		
 		cards = new ArrayList<>();
 		for(int i = 0;i < 7; i++)
-			cards.add(new Card("Card" + String.valueOf(i), 30 + i,
-					i % 2 == 0 ? Gender.female : Gender.male));
+			cards.add(new Card("Card" + String.valueOf(i), (short) (30 + i),
+					i % 2 == 0 ? Gender.female : Gender.male, false));
+		
 	}
+	
 	@Test
 	public void testRegisterCard() {
-		OperationsWithUsers.deleteAllUsers();
+		OperationsWithUser.deleteAllUsers();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUsers.register(users.get(i)))
+			if(!OperationsWithUser.register(users.get(i)))
 				fail();
 		for(int i = 0; i < users.size(); i++)
-			if(OperationsWithUsers.isUserRegisted(users.get(i)) == null)
+			if(OperationsWithUser.isUserRegisted(users.get(i)) == null)
 				fail();
 	}
 
 	@Test
 	public void testDeleteUsers() {
 		for(int i = 0; i < users.size(); i++)
-			OperationsWithUsers.register(users.get(i));
+			OperationsWithUser.register(users.get(i));
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUsers.delete(users.get(i)))
+			if(!OperationsWithUser.delete(users.get(i)))
 				fail();
 	}
 	
 	@Test
 	public void testUsersFiltr() {
-		OperationsWithUsers.deleteAllUsers();
+		OperationsWithUser.deleteAllUsers();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUsers.register(users.get(i)))
+			if(!OperationsWithUser.register(users.get(i)))
 				fail();
-		if(OperationsWithUsers.getAllUsersFiltr("Porky", 
+		if(OperationsWithUser.getAllUsersFiltr("Porky", 
 				"",(short) 1,(short) 1).size() != 2)
 			fail();
-		if(OperationsWithUsers.getAllUsersFiltr("or", 
+		if(OperationsWithUser.getAllUsersFiltr("or", 
 				"132135223",(short) 0,(short) 2).size() != 1)
 			fail();
-		if(OperationsWithUsers.getAllUsersFiltr("ork", 
+		if(OperationsWithUser.getAllUsersFiltr("ork", 
 				"",(short) 0,(short) 2).size() != 7)
 			fail();
 	}
 	
 	@Test
 	public void testUpdateUser() {
-		OperationsWithUsers.deleteAllUsers();
+		OperationsWithUser.deleteAllUsers();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUsers.register(users.get(i)))
+			if(!OperationsWithUser.register(users.get(i)))
 				fail();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUsers.update(users.get(i)))
+			if(!OperationsWithUser.update(users.get(i)))
 				fail();
 	}
 	
 	@Test
 	public void testGetUsers() {
-		OperationsWithUsers.deleteAllUsers();
+		OperationsWithUser.deleteAllUsers();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUsers.register(users.get(i)))
+			if(!OperationsWithUser.register(users.get(i)))
 				fail();
-		List<Users> usersP = OperationsWithUsers.getAllUsers();
+		List<User> usersP = OperationsWithUser.getAllUsers();
 		for(int i = 0; i < users.size(); ++i)
 			assertTrue(usersP.get(i).equals(users.get(i)));
 	}
@@ -121,13 +126,14 @@ public class Tests {
 		for(int i = 0; i < cards.size(); i++)
 			if(!OperationsWithCard.register(cards.get(i)))
 				fail();
-		if(OperationsWithCard.getAllCardsFiltr("Card", null, 0, 40).size() != 7)
+		if(OperationsWithCard.getAllCardsFiltr("Card", null, (short) 0, 
+				(short) 40).size() != 7)
 			fail();
 		if(OperationsWithCard.getAllCardsFiltr("ard", 
-				Gender.female, 0, 40).size() != 4)
+				Gender.female, (short) 0, (short) 40).size() != 4)
 			fail();
 		if(OperationsWithCard.getAllCardsFiltr("ork", 
-				null, 0, 35).size() != 0)
+				null, (short) 0, (short) 35).size() != 0)
 			fail();
 	}
 	
@@ -152,4 +158,5 @@ public class Tests {
 		for(int i = 0; i < cards.size(); ++i)
 			assertTrue(cardsP.get(i).equals(cards.get(i)));
 	}
+
 }

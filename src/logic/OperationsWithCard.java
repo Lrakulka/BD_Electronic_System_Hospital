@@ -135,7 +135,7 @@ public class OperationsWithCard {
 	}
 	
 	public static List<Card> getAllCardsFiltr(String name, 
-			Gender gender, Integer age_levelLow, Integer age_levelHight) {
+			Gender gender, Short age_levelLow, Short age_levelHight) {
 		Session session = null;
         List<Card> cards = null;
         try {
