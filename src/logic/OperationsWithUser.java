@@ -116,7 +116,20 @@ public class OperationsWithUser {
 	}
 	 
 	public static List<User> getAllUsers() {
-		return getAllUsersFiltr("", "", new Short((short) 0), new Short((short)2));
+		Session session = null;
+        List<User> users = null;
+        try {
+            session = DatabaseConnect.getSessionFactory().openSession();
+            users = session.createCriteria(User.class).list();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage(),
+            		"Ошибка I/O", JOptionPane.OK_OPTION);
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return users;
 	}
 	
 	public static List<User> getAllUsersFiltr(String name, 

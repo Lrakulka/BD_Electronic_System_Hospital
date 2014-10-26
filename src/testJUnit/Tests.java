@@ -2,15 +2,13 @@ package testJUnit;
 
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+
 import hibernate.Card;
 import hibernate.Gender;
-import hibernate.Note;
 import hibernate.User;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import logic.OperationsWithCard;
 import logic.OperationsWithUser;
@@ -22,7 +20,6 @@ public class Tests {
 
 	ArrayList<User> users;
 	ArrayList<Card> cards;
-	ArrayList<Note> notes;
 	
 	public Tests() {
 		// TODO Auto-generated constructor stub
@@ -39,9 +36,7 @@ public class Tests {
 		for(int i = 0;i < 7; i++)
 			cards.add(new Card("Card" + String.valueOf(i), (short) (30 + i),
 					i % 2 == 0 ? Gender.female : Gender.male, false));
-		
 	}
-	
 	@Test
 	public void testRegisterCard() {
 		OperationsWithUser.deleteAllUsers();
@@ -126,14 +121,13 @@ public class Tests {
 		for(int i = 0; i < cards.size(); i++)
 			if(!OperationsWithCard.register(cards.get(i)))
 				fail();
-		if(OperationsWithCard.getAllCardsFiltr("Card", null, (short) 0, 
-				(short) 40).size() != 7)
+		if(OperationsWithCard.getAllCardsFiltr("Card", null,(short) 0,(short) 40).size() != 7)
 			fail();
 		if(OperationsWithCard.getAllCardsFiltr("ard", 
-				Gender.female, (short) 0, (short) 40).size() != 4)
+				Gender.female,(short) 0,(short) 40).size() != 4)
 			fail();
 		if(OperationsWithCard.getAllCardsFiltr("ork", 
-				null, (short) 0, (short) 35).size() != 0)
+				null,(short) 0,(short) 35).size() != 0)
 			fail();
 	}
 	
@@ -158,5 +152,4 @@ public class Tests {
 		for(int i = 0; i < cards.size(); ++i)
 			assertTrue(cardsP.get(i).equals(cards.get(i)));
 	}
-
 }

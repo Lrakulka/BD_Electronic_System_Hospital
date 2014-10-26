@@ -4,48 +4,105 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="session")
 public class Session {
-	private Integer id;
-	private Integer card_id;
-	@Type(type = "boolean")
-	private Boolean result; 
-	private Integer diagnos_id;
 	@Id
-    @GeneratedValue(generator="increment")
-    @GenericGenerator(name="increment", strategy = "increment")
-    @Column(name="id")
+    @GeneratedValue
+    @Column(name = "id")
+	private Integer id;
+	
+	@Column(name = "result")
+	@Type(type = "boolean")
+	private Boolean result;
+	
+	@ManyToOne
+	@JoinColumn(name = "card_id")
+	private Card card;
+	
+	@ManyToOne
+    @JoinColumn(name = "diagnosis_id")
+    private Diagnos diagnos;
+
 	public Integer getId() {
 		return id;
 	}
-	@Column(name="card_id")
-	public Integer getCard_id() {
-		return card_id;
-	}
-	@Column(name="result")
+
 	public Boolean getResult() {
 		return result;
 	}
-	@Column(name="diagnosis_id")
-	public Integer getDiagnosis_id() {
-		return diagnos_id;
+
+	public Card getCard() {
+		return card;
 	}
+
+	public Diagnos getDiagnos() {
+		return diagnos;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public void setCard_id(Integer card_id) {
-		this.card_id = card_id;
-	}
+
 	public void setResult(Boolean result) {
 		this.result = result;
 	}
-	public void setDiagnosis_id(Integer diagnosis_id) {
-		this.diagnos_id = diagnosis_id;
+
+	public void setCard(Card card) {
+		this.card = card;
+	}
+
+	public void setDiagnos(Diagnos diagnos) {
+		this.diagnos = diagnos;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((card == null) ? 0 : card.hashCode());
+		result = prime * result + ((diagnos == null) ? 0 : diagnos.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result
+				+ ((this.result == null) ? 0 : this.result.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Session other = (Session) obj;
+		if (card == null) {
+			if (other.card != null)
+				return false;
+		} else if (!card.equals(other.card))
+			return false;
+		if (diagnos == null) {
+			if (other.diagnos != null)
+				return false;
+		} else if (!diagnos.equals(other.diagnos))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (result == null) {
+			if (other.result != null)
+				return false;
+		} else if (!result.equals(other.result))
+			return false;
+		return true;
 	}
 }

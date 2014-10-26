@@ -4,22 +4,20 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-    <property name="hibernate.connection.url">jdbc:mysql://77.47.209.171:3306/hospital</property>
-    <property name="hibernate.connection.username">admin</property>
-    <property name="hibernate.connection.password">zxc123</property>
-    <property name="connection.pool_size">10</property>
-    <property name="dialect">org.hibernate.dialect.OracleDialect</property>
-    <property name="show_sql">true</property>
-    <property name="hbm2ddl.auto">update</property>
-    <property name="hibernate.connection.autocommit">false</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/hospital</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">1111</property>
+    <property name="connection.pool_size">1</property>
+    <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="current_session_context_class">thread</property>
-
+    <property name="cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
+    <property name="show_sql">true</property>
     
     <mapping class="hibernate.User"/>
     <mapping class="hibernate.Card"/>
-    <mapping class="hibernate.Diagnos"/>
-    <mapping class="hibernate.Group"/>
     <mapping class="hibernate.Note"/>
     <mapping class="hibernate.Session"/>
+    <mapping class="hibernate.Diagnos"/>
+    <mapping class="hibernate.Group"/>
   </session-factory>
 </hibernate-configuration>
