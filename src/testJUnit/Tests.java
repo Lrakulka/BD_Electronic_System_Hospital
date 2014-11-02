@@ -4,15 +4,21 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import hibernate.Card;
+import hibernate.Diagnos;
+import hibernate.Disease;
 import hibernate.Gender;
+import hibernate.Note;
 import hibernate.User;
+import hibernateConnect.DatabaseConnect;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import logic.OperationsWithCard;
 import logic.OperationsWithUser;
 
+import org.hibernate.Session;
 import org.junit.Test;
 
 
@@ -151,5 +157,85 @@ public class Tests {
 		List<Card> cardsP = OperationsWithCard.getAllCards();
 		for(int i = 0; i < cards.size(); ++i)
 			assertTrue(cardsP.get(i).equals(cards.get(i)));
+	}
+	
+	// I know, looks horrible.
+	@Test
+	public void testRelationship() {
+		{
+		 	Session session = DatabaseConnect.getSessionFactory().openSession();
+	        session.beginTransaction();
+	        
+	       // session.createQuery("set FOREIGN_KEY_CHECKS = 0").executeUpdate();
+	        session.createQuery("DELETE FROM Card").executeUpdate();
+	        session.createQuery("DELETE FROM Diagnos").executeUpdate();
+	        session.createQuery("DELETE FROM Disease").executeUpdate();
+	        session.createQuery("DELETE FROM Group").executeUpdate();
+	        session.createQuery("DELETE FROM Note").executeUpdate();
+	        session.createQuery("DELETE FROM Session").executeUpdate();
+	        session.createQuery("DELETE FROM User").executeUpdate();
+	        
+	        User user1 = new User("Svin Petr",(short) 0, "+43345676543", "qwerty");
+	        User user2 = new User("Svin Baca",(short) 0, "+97532642225", "ytrewq");
+	        Note note1 = new Note(false, new Date(1000), "This is test of hibernete" +
+	        		" relationship");
+	        Note note2 = new Note(true, new Date(1234), "This is test of hibernete" +
+	        		" relationship");
+	        Card card = new Card("Bacilev Andrey", (short) 28, Gender.male, false);
+	        hibernate.Session session1 = new hibernate.Session();
+	        hibernate.Session session2 = new hibernate.Session();
+	        session1.setResult(true);
+	        session2.setResult(false);
+	        Diagnos diagnos1 = new Diagnos("U bolnogo otsustvuet mozg");
+	        Diagnos diagnos2 = new Diagnos("U bolnogo snova otsustvuet mozg");
+	        Disease disease1 = new Disease("Net mozga.Netu golovnogo mozga");
+	        Disease disease2 = new Disease("Net mozga.Netu prodolgovatogo mozga");
+
+	        diagnos1.setDisease(disease1);
+	        diagnos2.setDisease(disease2);
+	        session1.setDiagnos(diagnos1);
+	        session2.setDiagnos(diagnos2);
+	        session1.setCard(card);
+	        session2.setCard(card);
+	        note1.setCard(card);
+	        note2.setCard(card);
+	        note1.setUser(user1);
+	        note2.setUser(user2);
+	        
+	        session.save(card);
+	        session.save(user1);
+	        session.save(user2);
+	        session.save(note1);
+	        session.save(note2);
+	        session.save(disease1);
+	        session.save(disease2);
+	        session.save(diagnos1);
+	        session.save(diagnos2);
+	        session.save(session1);
+	        session.save(session2);
+	      
+	        session.getTransaction().commit();
+	        session.close();
+		}
+	        
+	        List<Card> cards = OperationsWithCard.getAllCards();	                
+	        for(int i = 0; i < 2; ++i) {
+	        	Card card = cards.get(0);		        
+		        ArrayList<Note> notes = card.getAllNotes();	
+		        ArrayList<hibernate.Session> sessions = card.getAllSessions();
+	        	Note note = notes.get(i);
+	        	User user = note.getUser();
+	        	hibernate.Session session = sessions.get(i);
+	        	Diagnos diagnos = session.getDiagnos();
+	        	Disease disease = diagnos.getDisease();
+	        	String history = new String(user.getName() + " " + user.getPhone() +
+	        			" " + user.getPwd() + " " + user.getAccess_level() + ". " +
+	        			note.getHidden_note() + " " + note.getDate() + " " +
+	        			note.getHide() + ". " + card.getName() + " " + 
+	        			card.getAge() + " " + card.getSex() + " " + card.getIsAgain() +
+	        			". " + session.getResult() + ". " + diagnos.getDescription() + 
+	        			". " + disease.getName());
+	        	System.out.println(history);
+	        }
 	}
 }

@@ -34,15 +34,22 @@ public class Diagnos {
 	private Set<Session> sessions;
 
 	@ManyToOne
-    @JoinColumn(name="group_id")
-    private Group group;
+    @JoinColumn(name="disease")
+    private Disease disease;
 	
-	public Group getGroup() {
-		return group;
+	public Diagnos() {
+	}
+	
+	public Diagnos(String description) {
+		this.description = description;
+	}
+	
+	public Disease getDisease() {
+		return disease;
 	}
 
-	public void setGroup(Group group) {
-		this.group = group;
+	public void setDisease(Disease disease) {
+		this.disease = disease;
 	}
 
 	/**

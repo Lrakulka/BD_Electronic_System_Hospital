@@ -1,3 +1,0 @@
-if (window.Ya && window.Ya.Share ) { Ya.Share.showCounter(
-    0
-) }

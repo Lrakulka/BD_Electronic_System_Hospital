@@ -19,5 +19,6 @@
     <mapping class="hibernate.Session"/>
     <mapping class="hibernate.Diagnos"/>
     <mapping class="hibernate.Group"/>
+    <mapping class="hibernate.Disease"/>
   </session-factory>
 </hibernate-configuration>

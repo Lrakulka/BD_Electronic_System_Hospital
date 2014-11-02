@@ -10,18 +10,15 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
-
 @Entity
-@Table(name="groups")
-public class Group {
+@Table(name="diseases")
+public class Disease {
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
@@ -31,49 +28,63 @@ public class Group {
 	@Column(name = "name")
 	private String name;
 	
-	@ManyToOne
-    @JoinColumn(name="group_id")
-    private Group group;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="disease")
+    private Set<Diagnos> diagnosis;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="group")
-	private Set<Group> groups;
-	
-	public Group() {		
+	public Disease() {
+		
 	}
 	
-	public Group(String name) {		
+	public Disease(String name) {
 		this.name = name;
 	}
-	
 	/**
 	  * Project use Lazy initialization that is why class has two methods
-	  * "getNotes" and "getAllNotes". First method return link to notes, 
+	  * "getDisease" and "getAllDisease". First method return link to notes, 
 	  * second method create session and get data from database and 
-	  * return link to object ArrayList witch contains all group of 
-	  * current group. Return null if find group is current group.
+	  * return link to object ArrayList witch contains all diagnosis of 
+	  * current disease.
 	  */
-	public ArrayList<Group> getAllGroups() {
-		ArrayList<Group> listGroups;
+	public ArrayList<Diagnos> getAllDiagnosis() {
+		ArrayList<Diagnos> listDiagnosis;
 		Session session = DatabaseConnect.getSessionFactory().openSession();
-		Group group = (Group) session.load(Group.class, this.id);
-		Hibernate.initialize(group.groups);
-		listGroups = new ArrayList<>(group.getGroups());
+		Disease disease = (Disease) session.load(Disease.class, this.id);
+		Hibernate.initialize(disease.diagnosis);
+		listDiagnosis = new ArrayList<>(disease.getDiagnosis());
 		session.close();
-		if ( listGroups.isEmpty() || listGroups.get(0).id.equals(this.id))
-			return null;
-		else return listGroups;
+		return listDiagnosis;
 	}
-	
+
 	public Integer getId() {
 		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public Set<Diagnos> getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDiagnosis(Set<Diagnos> diagnosis) {
+		this.diagnosis = diagnosis;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((group == null) ? 0 : group.hashCode());
-		result = prime * result + ((groups == null) ? 0 : groups.hashCode());
+		result = prime * result
+				+ ((diagnosis == null) ? 0 : diagnosis.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -87,16 +98,11 @@ public class Group {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Group other = (Group) obj;
-		if (group == null) {
-			if (other.group != null)
+		Disease other = (Disease) obj;
+		if (diagnosis == null) {
+			if (other.diagnosis != null)
 				return false;
-		} else if (!group.equals(other.group))
-			return false;
-		if (groups == null) {
-			if (other.groups != null)
-				return false;
-		} else if (!groups.equals(other.groups))
+		} else if (!diagnosis.equals(other.diagnosis))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -109,33 +115,5 @@ public class Group {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Group getGroup() {
-		return group;
-	}
-
-	public Set<Group> getGroups() {
-		return groups;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public void setGroup(Group group) {
-		this.group = group;
-	}
-
-	public void setGroups(Set<Group> groups) {
-		this.groups = groups;
 	}
 }

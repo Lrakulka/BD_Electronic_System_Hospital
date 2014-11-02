@@ -55,9 +55,8 @@ public class User {
 		StringBuffer pass = new StringBuffer();
 		
 		for(int i = 0; i < h.length; ++i)
-			pass.append(Integer.toHexString(h[i]));
+			pass.append(Integer.toHexString(0xFF & h[i]));
 		this.pwd = pass.toString();
-		this.pwd = pwd;
 	}
 
 	public User( String name,  Short access_level,

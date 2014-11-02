@@ -38,11 +38,10 @@ public class Note {
 	@Type(type = "text")
 	private String hidden_note;
 	
-	public Note(){
+	public Note() {
 	}
 	
-	public Note(Integer user_id, Integer card_id, Boolean hide, 
-			Date date, String hidden_note){
+	public Note(Boolean hide, Date date, String hidden_note) {
 		this.hide = hide;
 		this.date = date;
 		this.hidden_note = hidden_note;
