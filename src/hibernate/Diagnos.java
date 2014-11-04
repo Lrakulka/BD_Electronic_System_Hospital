@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.Hibernate;
-import hibernate.Session;
+import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="diagnosis")
@@ -31,7 +31,7 @@ public class Diagnos {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="diagnos")
-	private Set<Session> sessions;
+	private Set<hibernate.Session> sessions;
 
 	@ManyToOne
     @JoinColumn(name="disease")
@@ -54,14 +54,14 @@ public class Diagnos {
 
 	/**
 	  * Project use Lazy initialization that is why class has two methods
-	  * "getNotes" and "getAllNotes". First method return link to notes, 
+	  * "getSessions" and "getAllSessions". First method return link to sessions, 
 	  * second method create session and get data from database and 
 	  * return link to object ArrayList witch contains all sessions of 
 	  * current diagnose.
 	  */
-	public ArrayList<Session> getAllSessions() {
-		ArrayList<Session> listSessions;
-		org.hibernate.Session session = DatabaseConnect.getSessionFactory().openSession();
+	public ArrayList<hibernate.Session> getAllSessions() {
+		ArrayList<hibernate.Session> listSessions;
+		Session session = DatabaseConnect.getSessionFactory().openSession();
 		Diagnos diagnos = (Diagnos) session.load(Diagnos.class, this.id);
 		Hibernate.initialize(diagnos.sessions);
 		listSessions = new ArrayList<>(diagnos.getSessions());
@@ -77,7 +77,7 @@ public class Diagnos {
 		return description;
 	}
 
-	public Set<Session> getSessions() {
+	public Set<hibernate.Session> getSessions() {
 		return sessions;
 	}
 
@@ -89,7 +89,7 @@ public class Diagnos {
 		this.description = description;
 	}
 
-	public void setSessions(Set<Session> sessions) {
+	public void setSessions(Set<hibernate.Session> sessions) {
 		this.sessions = sessions;
 	}
 
@@ -100,8 +100,9 @@ public class Diagnos {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result
-				+ ((sessions == null) ? 0 : sessions.hashCode());
+		// Circle between sessions.hashCode() and diagnos.hashCode()
+//		result = prime * result
+//				+ ((sessions == null) ? 0 : sessions.hashCode());
 		return result;
 	}
 

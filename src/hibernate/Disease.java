@@ -40,7 +40,7 @@ public class Disease {
 	}
 	/**
 	  * Project use Lazy initialization that is why class has two methods
-	  * "getDisease" and "getAllDisease". First method return link to notes, 
+	  * "getDiagnosis" and "getAllDiagnosis". First method return link to diagnosis, 
 	  * second method create session and get data from database and 
 	  * return link to object ArrayList witch contains all diagnosis of 
 	  * current disease.

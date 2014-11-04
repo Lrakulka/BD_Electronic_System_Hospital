@@ -217,25 +217,28 @@ public class Tests {
 	        session.getTransaction().commit();
 	        session.close();
 		}
-	        
-	        List<Card> cards = OperationsWithCard.getAllCards();	                
-	        for(int i = 0; i < 2; ++i) {
-	        	Card card = cards.get(0);		        
-		        ArrayList<Note> notes = card.getAllNotes();	
-		        ArrayList<hibernate.Session> sessions = card.getAllSessions();
-	        	Note note = notes.get(i);
-	        	User user = note.getUser();
-	        	hibernate.Session session = sessions.get(i);
-	        	Diagnos diagnos = session.getDiagnos();
-	        	Disease disease = diagnos.getDisease();
-	        	String history = new String(user.getName() + " " + user.getPhone() +
-	        			" " + user.getPwd() + " " + user.getAccess_level() + ". " +
-	        			note.getHidden_note() + " " + note.getDate() + " " +
-	        			note.getHide() + ". " + card.getName() + " " + 
-	        			card.getAge() + " " + card.getSex() + " " + card.getIsAgain() +
-	        			". " + session.getResult() + ". " + diagnos.getDescription() + 
-	        			". " + disease.getName());
-	        	System.out.println(history);
-	        }
+		List<Card> cards = OperationsWithCard.getAllCards();
+        for(int i = 0; i < 2; ++i) {
+        	Card card = cards.get(0);		        
+	        ArrayList<Note> notes = card.getAllNotes();	
+	        ArrayList<hibernate.Session> sessions = card.getAllSessions();
+        	Note note = notes.get(i);
+        	User user = note.getUser();
+        	hibernate.Session session = sessions.get(i);
+        	Diagnos diagnos = session.getDiagnos();
+        	Disease disease = diagnos.getDisease();
+        	String history = new String(user.getName() + " " + user.getPhone() +
+        			" " + user.getPwd() + " " + user.getAccess_level() + ". " +
+        			note.getHidden_note() + " " + note.getDate() + " " +
+        			note.getHide() + ". " + card.getName() + " " + 
+        			card.getAge() + " " + card.getSex() + " " + card.getIsAgain() +
+        			". " + session.getResult() + ". " + diagnos.getDescription() + 
+        			". " + disease.getName());
+        	if(!history.equals("Svin Baca +97532642225 8c32e548bc4fbfc5dc53c89a36c812" +
+        			" 0. This is test of hibernete relationship 1970-01-01 true. " +
+        			"Bacilev Andrey 28 male false. true. U bolnogo otsustvuet mozg. " +
+        			"Net mozga.Netu golovnogo mozga"))
+        		fail();
+        }
 	}
 }

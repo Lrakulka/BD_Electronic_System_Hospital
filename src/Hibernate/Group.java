@@ -47,9 +47,9 @@ public class Group {
 	
 	/**
 	  * Project use Lazy initialization that is why class has two methods
-	  * "getNotes" and "getAllNotes". First method return link to notes, 
+	  * "getGroups" and "getAllGroups". First method return link to groups, 
 	  * second method create session and get data from database and 
-	  * return link to object ArrayList witch contains all group of 
+	  * return link to object ArrayList witch contains all groups of 
 	  * current group. Return null if find group is current group.
 	  */
 	public ArrayList<Group> getAllGroups() {

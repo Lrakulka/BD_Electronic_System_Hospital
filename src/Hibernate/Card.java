@@ -5,6 +5,7 @@ import hibernateConnect.DatabaseConnect;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -46,10 +47,10 @@ public class Card {
 	private Boolean isAgain;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="card")
-    private Set<Note> notes;
+    private Set<hibernate.Session> sessions;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="card")
-    private Set<hibernate.Session> sessions;
+    private Set<Note> notes;
 	
 	public Card() {
 		// TODO Auto-generated constructor stub
@@ -78,7 +79,7 @@ public class Card {
 	
 	/**
 	  * Project use Lazy initialization that is why class has two methods
-	  * "getNotes" and "getAllNotes". First method return link to notes, 
+	  * "getSessions" and "getAllSessions". First method return link to sessions, 
 	  * second method create session and get data from database and 
 	  * return link to object ArrayList witch contains all sessions of 
 	  * current card.
