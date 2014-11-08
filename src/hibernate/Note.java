@@ -32,6 +32,7 @@ public class Note {
 	private Boolean hide;
 	
 	@Column(name = "date")
+	@Type(type = "date")
 	private Date date;
 	
 	@Column(name = "hidden_note")
@@ -59,13 +60,10 @@ public class Note {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((card == null) ? 0 : card.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result
 				+ ((hidden_note == null) ? 0 : hidden_note.hashCode());
 		result = prime * result + ((hide == null) ? 0 : hide.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
 	
@@ -78,11 +76,6 @@ public class Note {
 		if (getClass() != obj.getClass())
 			return false;
 		Note other = (Note) obj;
-		if (card == null) {
-			if (other.card != null)
-				return false;
-		} else if (!card.equals(other.card))
-			return false;
 		if (date == null) {
 			if (other.date != null)
 				return false;
@@ -97,16 +90,6 @@ public class Note {
 			if (other.hide != null)
 				return false;
 		} else if (!hide.equals(other.hide))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (user == null) {
-			if (other.user != null)
-				return false;
-		} else if (!user.equals(other.user))
 			return false;
 		return true;
 	}

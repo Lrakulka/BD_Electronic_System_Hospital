@@ -13,12 +13,19 @@ import hibernateConnect.DatabaseConnect;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
 import logic.OperationsWithCard;
 import logic.OperationsWithUser;
 
 import org.hibernate.Session;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
@@ -162,83 +169,106 @@ public class Tests {
 	// I know, looks horrible.
 	@Test
 	public void testRelationship() {
-		{
-		 	Session session = DatabaseConnect.getSessionFactory().openSession();
-	        session.beginTransaction();
-	        
-	       // session.createQuery("set FOREIGN_KEY_CHECKS = 0").executeUpdate();
-	        session.createQuery("DELETE FROM Card").executeUpdate();
-	        session.createQuery("DELETE FROM Diagnos").executeUpdate();
-	        session.createQuery("DELETE FROM Disease").executeUpdate();
-	        session.createQuery("DELETE FROM Group").executeUpdate();
-	        session.createQuery("DELETE FROM Note").executeUpdate();
-	        session.createQuery("DELETE FROM Session").executeUpdate();
-	        session.createQuery("DELETE FROM User").executeUpdate();
-	        
-	        User user1 = new User("Svin Petr",(short) 0, "+43345676543", "qwerty");
-	        User user2 = new User("Svin Baca",(short) 0, "+97532642225", "ytrewq");
-	        Note note1 = new Note(false, new Date(1000), "This is test of hibernete" +
-	        		" relationship");
-	        Note note2 = new Note(true, new Date(1234), "This is test of hibernete" +
-	        		" relationship");
-	        Card card = new Card("Bacilev Andrey", (short) 28, Gender.male, false);
-	        hibernate.Session session1 = new hibernate.Session();
-	        hibernate.Session session2 = new hibernate.Session();
-	        session1.setResult(true);
-	        session2.setResult(false);
-	        Diagnos diagnos1 = new Diagnos("U bolnogo otsustvuet mozg");
-	        Diagnos diagnos2 = new Diagnos("U bolnogo snova otsustvuet mozg");
-	        Disease disease1 = new Disease("Net mozga.Netu golovnogo mozga");
-	        Disease disease2 = new Disease("Net mozga.Netu prodolgovatogo mozga");
+		
+	 	Session session = DatabaseConnect.getSessionFactory().openSession();
+        session.beginTransaction();
+        int size = 2;
+        User[] user = new User[size];
+        user[0] = new User("Svin Petr",(short) 0, "+43345676543", "qwerty");
+        user[1] = new User("Svin Baca",(short) 0, "+97532642225", "ytrewq");
+        Note[] note = new Note[size];
+        note[0] = new Note(false, Date.valueOf("2000-11-01"), "This is test of hibernete" +
+        		" relationship");
+        note[1] = new Note(true, Date.valueOf("2012-11-04"), "This is test of hibernete" +
+        		" relationship");
+        Card card = new Card("Bacilev Andrey", (short) 28, Gender.male, false);
+        hibernate.Session[] sessions = new hibernate.Session[size];
+        sessions[0] = new hibernate.Session();
+        sessions[1] = new hibernate.Session();
+        sessions[0].setResult(true);
+        sessions[1].setResult(false);
+        Diagnos[] diagnos = new Diagnos[2];
+        diagnos[0] = new Diagnos("U bolnogo otsustvuet mozg");
+        diagnos[1] = new Diagnos("U bolnogo snova otsustvuet mozg");
+        Disease[] disease = new Disease[2];
+        disease[0] = new Disease("Net mozga.Netu golovnogo mozga");
+        disease[1] = new Disease("Net mozga.Netu prodolgovatogo mozga");
 
-	        diagnos1.setDisease(disease1);
-	        diagnos2.setDisease(disease2);
-	        session1.setDiagnos(diagnos1);
-	        session2.setDiagnos(diagnos2);
-	        session1.setCard(card);
-	        session2.setCard(card);
-	        note1.setCard(card);
-	        note2.setCard(card);
-	        note1.setUser(user1);
-	        note2.setUser(user2);
-	        
-	        session.save(card);
-	        session.save(user1);
-	        session.save(user2);
-	        session.save(note1);
-	        session.save(note2);
-	        session.save(disease1);
-	        session.save(disease2);
-	        session.save(diagnos1);
-	        session.save(diagnos2);
-	        session.save(session1);
-	        session.save(session2);
-	      
-	        session.getTransaction().commit();
-	        session.close();
-		}
-		List<Card> cards = OperationsWithCard.getAllCards();
-        for(int i = 0; i < 2; ++i) {
-        	Card card = cards.get(0);		        
-	        ArrayList<Note> notes = card.getAllNotes();	
-	        ArrayList<hibernate.Session> sessions = card.getAllSessions();
-        	Note note = notes.get(i);
-        	User user = note.getUser();
-        	hibernate.Session session = sessions.get(i);
-        	Diagnos diagnos = session.getDiagnos();
-        	Disease disease = diagnos.getDisease();
-        	String history = new String(user.getName() + " " + user.getPhone() +
-        			" " + user.getPwd() + " " + user.getAccess_level() + ". " +
-        			note.getHidden_note() + " " + note.getDate() + " " +
-        			note.getHide() + ". " + card.getName() + " " + 
-        			card.getAge() + " " + card.getSex() + " " + card.getIsAgain() +
-        			". " + session.getResult() + ". " + diagnos.getDescription() + 
-        			". " + disease.getName());
-        	if(!history.equals("Svin Baca +97532642225 8c32e548bc4fbfc5dc53c89a36c812" +
-        			" 0. This is test of hibernete relationship 1970-01-01 true. " +
-        			"Bacilev Andrey 28 male false. true. U bolnogo otsustvuet mozg. " +
-        			"Net mozga.Netu golovnogo mozga"))
-        		fail();
+        for(int i = 0; i < size; ++i) {
+        	diagnos[i].setDisease(disease[i]);
+        	sessions[i].setDiagnos(diagnos[i]);
+        	sessions[i].setCard(card);
+        	note[i].setCard(card);
+        	note[i].setUser(user[i]);
         }
+        
+        session.save(card);
+        for(int i = 0; i < size; ++i) {
+        	session.save(user[i]);
+        	session.save(note[i]);
+        	session.save(disease[i]);
+        	session.save(diagnos[i]);
+        	session.save(sessions[i]);
+        }
+      
+        session.getTransaction().commit();
+        session.close();
+		
+		List<Card> cardsD = OperationsWithCard.getAllCards();
+		Card cardD = cardsD.get(0);		        
+        ArrayList<Note> notesD = cardD.getAllNotes();	
+        notesD.sort(new Comparator<Note>() {
+
+			@Override
+			public int compare(Note arg0, Note arg1) {
+				// TODO Auto-generated method stub
+				if(arg0.getId() > arg1.getId())
+					return 1;
+				else return -1;
+			}
+        	
+		});
+        ArrayList<hibernate.Session> sessionsD = cardD.getAllSessions();
+        sessionsD.sort(new Comparator<hibernate.Session>() {
+
+			@Override
+			public int compare(hibernate.Session arg0, hibernate.Session arg1) {
+				// TODO Auto-generated method stub
+				if(arg0.getId() > arg1.getId())
+					return 1;
+				else return -1;
+			}
+			
+		});
+        for(int i = 0; i < size; ++i) {        	
+        	Note noteD = notesD.get(i);
+        	User userD = noteD.getUser();
+        	hibernate.Session sessionD = sessionsD.get(i);
+        	Diagnos diagnosD = sessionD.getDiagnos();
+        	Disease diseaseD = diagnosD.getDisease();
+        	
+        	assertTrue(user[i].equals(userD));
+        	assertTrue(note[i].equals(noteD));
+        	assertTrue(card.equals(cardD));
+        	assertTrue(sessions[i].equals(sessionD));
+        	assertTrue(diagnos[i].equals(diagnosD));
+        	assertTrue(disease[i].equals(diseaseD));
+        }
+	}
+	
+	@Before
+	@After
+	public void cleanAllTables() {
+		Session session = DatabaseConnect.getSessionFactory().openSession();
+        session.beginTransaction();
+        String tablesName[]  = {"card", "diagnosis", "diseases", "groups", "notes",
+        		"session", "users"};
+        session.createSQLQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
+        for(int i = 0; i < tablesName.length; ++i) {
+        	session.createSQLQuery("TRUNCATE " + tablesName[i]).executeUpdate();
+        }
+        session.createSQLQuery("SET FOREIGN_KEY_CHECKS = 1").executeUpdate();
+        session.getTransaction().commit();
+        session.close();
 	}
 }

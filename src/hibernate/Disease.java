@@ -83,8 +83,6 @@ public class Disease {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((diagnosis == null) ? 0 : diagnosis.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
@@ -99,11 +97,6 @@ public class Disease {
 		if (getClass() != obj.getClass())
 			return false;
 		Disease other = (Disease) obj;
-		if (diagnosis == null) {
-			if (other.diagnosis != null)
-				return false;
-		} else if (!diagnosis.equals(other.diagnosis))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;

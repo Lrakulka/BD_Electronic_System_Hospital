@@ -100,9 +100,6 @@ public class Diagnos {
 		result = prime * result
 				+ ((description == null) ? 0 : description.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		// Circle between sessions.hashCode() and diagnos.hashCode()
-//		result = prime * result
-//				+ ((sessions == null) ? 0 : sessions.hashCode());
 		return result;
 	}
 
@@ -124,11 +121,6 @@ public class Diagnos {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
-			return false;
-		if (sessions == null) {
-			if (other.sessions != null)
-				return false;
-		} else if (!sessions.equals(other.sessions))
 			return false;
 		return true;
 	}

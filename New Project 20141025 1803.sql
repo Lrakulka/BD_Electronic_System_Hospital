@@ -34,21 +34,13 @@ CREATE TABLE `card` (
   `note` text,
   `isAgain` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `card`
 --
 
 /*!40000 ALTER TABLE `card` DISABLE KEYS */;
-INSERT INTO `card` (`id`,`name`,`age`,`sex`,`note`,`isAgain`) VALUES 
- (22,'Card0',30,'female',NULL,0x00),
- (23,'Card1',31,'male',NULL,0x00),
- (24,'Card2',32,'female',NULL,0x00),
- (25,'Card3',33,'male',NULL,0x00),
- (26,'Card4',34,'female',NULL,0x00),
- (27,'Card5',35,'male',NULL,0x00),
- (28,'Card6',36,'female',NULL,0x00);
 /*!40000 ALTER TABLE `card` ENABLE KEYS */;
 
 
@@ -60,10 +52,10 @@ DROP TABLE IF EXISTS `diagnosis`;
 CREATE TABLE `diagnosis` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `description` varchar(100) NOT NULL,
-  `group_id` int(11) NOT NULL,
+  `disease` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `Diagnosis-GroupOwner_idx` (`group_id`),
-  CONSTRAINT `Diagnosis-GroupOwner` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  KEY `Diagnosis-Diseaser_idx` (`disease`) USING BTREE,
+  CONSTRAINT `Diagnosis-GroupOwner` FOREIGN KEY (`disease`) REFERENCES `diagnosis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -72,6 +64,25 @@ CREATE TABLE `diagnosis` (
 
 /*!40000 ALTER TABLE `diagnosis` DISABLE KEYS */;
 /*!40000 ALTER TABLE `diagnosis` ENABLE KEYS */;
+
+
+--
+-- Definition of table `diseases`
+--
+
+DROP TABLE IF EXISTS `diseases`;
+CREATE TABLE `diseases` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `diseases`
+--
+
+/*!40000 ALTER TABLE `diseases` DISABLE KEYS */;
+/*!40000 ALTER TABLE `diseases` ENABLE KEYS */;
 
 
 --
@@ -160,22 +171,13 @@ CREATE TABLE `users` (
   `phone` varchar(45) DEFAULT NULL,
   `pwd` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`,`name`,`access_level`,`phone`,`pwd`) VALUES 
- (1,'Ivanov Ivan',24,NULL,'21'),
- (23,'Porky1',0,'134321223','1111'),
- (24,'Porky2',1,'132135223','0000'),
- (25,'Porky3',2,'134633432','jsfn'),
- (26,'Porky4',2,'435446333','sdfg'),
- (27,'Porky5',1,'123456789','dsgd'),
- (28,'Porky6',0,'444325252','dsfd'),
- (29,'Porky7',0,'657345434','dsfs');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 

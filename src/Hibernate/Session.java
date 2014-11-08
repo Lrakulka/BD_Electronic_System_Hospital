@@ -66,8 +66,6 @@ public class Session {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((card == null) ? 0 : card.hashCode());
-		result = prime * result + ((diagnos == null) ? 0 : diagnos.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result
 				+ ((this.result == null) ? 0 : this.result.hashCode());
@@ -83,16 +81,6 @@ public class Session {
 		if (getClass() != obj.getClass())
 			return false;
 		Session other = (Session) obj;
-		if (card == null) {
-			if (other.card != null)
-				return false;
-		} else if (!card.equals(other.card))
-			return false;
-		if (diagnos == null) {
-			if (other.diagnos != null)
-				return false;
-		} else if (!diagnos.equals(other.diagnos))
-			return false;
 		if (id == null) {
 			if (other.id != null)
 				return false;
