@@ -18,7 +18,7 @@ import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="diseases")
-public class Disease {
+public class Disease extends CommonField {
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")

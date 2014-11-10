@@ -22,11 +22,11 @@ CREATE DATABASE IF NOT EXISTS hospital;
 USE hospital;
 
 --
--- Definition of table `card`
+-- Definition of table `cards`
 --
 
-DROP TABLE IF EXISTS `card`;
-CREATE TABLE `card` (
+DROP TABLE IF EXISTS `cards`;
+CREATE TABLE `cards` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `age` smallint(5) unsigned NOT NULL DEFAULT '0',
@@ -37,11 +37,11 @@ CREATE TABLE `card` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `card`
+-- Dumping data for table `cards`
 --
 
-/*!40000 ALTER TABLE `card` DISABLE KEYS */;
-/*!40000 ALTER TABLE `card` ENABLE KEYS */;
+/*!40000 ALTER TABLE `cards` DISABLE KEYS */;
+/*!40000 ALTER TABLE `cards` ENABLE KEYS */;
 
 
 --
@@ -117,12 +117,12 @@ CREATE TABLE `notes` (
   `user_id` int(10) NOT NULL,
   `card_id` int(10) NOT NULL,
   `hide` bit(1) NOT NULL DEFAULT b'1',
-  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date` date NOT NULL,
   `hidden_note` text,
   PRIMARY KEY (`id`),
   KEY `Notes-Users_idx` (`user_id`),
   KEY `Notes-Cars_idx` (`card_id`),
-  CONSTRAINT `Notes-Cars` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Notes-Cars` FOREIGN KEY (`card_id`) REFERENCES `cards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Notes-Users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -135,11 +135,11 @@ CREATE TABLE `notes` (
 
 
 --
--- Definition of table `session`
+-- Definition of table `sessions`
 --
 
-DROP TABLE IF EXISTS `session`;
-CREATE TABLE `session` (
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE `sessions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `card_id` int(11) NOT NULL,
   `result` bit(1) NOT NULL DEFAULT b'0',
@@ -147,16 +147,16 @@ CREATE TABLE `session` (
   PRIMARY KEY (`id`),
   KEY `Sessions-Cards_idx` (`card_id`),
   KEY `Sessions-Diagnosis_idx` (`diagnosis_id`),
-  CONSTRAINT `Sessions-Cards` FOREIGN KEY (`card_id`) REFERENCES `card` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `Sessions-Cards` FOREIGN KEY (`card_id`) REFERENCES `cards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Sessions-Diagnosis` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Dumping data for table `session`
+-- Dumping data for table `sessions`
 --
 
-/*!40000 ALTER TABLE `session` DISABLE KEYS */;
-/*!40000 ALTER TABLE `session` ENABLE KEYS */;
+/*!40000 ALTER TABLE `sessions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sessions` ENABLE KEYS */;
 
 
 --

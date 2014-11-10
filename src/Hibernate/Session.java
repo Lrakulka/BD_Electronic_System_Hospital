@@ -11,8 +11,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name="session")
-public class Session {
+@Table(name="sessions")
+public class Session extends CommonField {
 	@Id
     @GeneratedValue
     @Column(name = "id")

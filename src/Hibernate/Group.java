@@ -18,10 +18,11 @@ import javax.persistence.Table;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="groups")
-public class Group {
+public class Group extends CommonField {
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
@@ -30,6 +31,10 @@ public class Group {
 	
 	@Column(name = "name")
 	private String name;
+	
+	@Column(name = "isHead")
+	@Type(type = "boolean")
+	private Boolean isHead;
 	
 	@ManyToOne
     @JoinColumn(name="group_id")
@@ -41,8 +46,9 @@ public class Group {
 	public Group() {		
 	}
 	
-	public Group(String name) {		
+	public Group(String name, Boolean isHead) {		
 		this.name = name;
+		this.isHead = isHead;
 	}
 	
 	/**
@@ -66,6 +72,10 @@ public class Group {
 	
 	public Integer getId() {
 		return id;
+	}
+
+	public Boolean getIsHead() {
+		return isHead;
 	}
 
 	@Override
@@ -126,4 +136,8 @@ public class Group {
 	public void setGroups(Set<Group> groups) {
 		this.groups = groups;
 	}
+
+	public void setIsHead(Boolean isHead) {
+		this.isHead = isHead;
+	}	
 }

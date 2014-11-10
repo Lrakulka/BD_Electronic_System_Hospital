@@ -20,8 +20,8 @@ import org.hibernate.Session;
 import org.hibernate.annotations.Type;
 
 @Entity
-@Table(name="card")
-public class Card {
+@Table(name="cards")
+public class Card extends CommonField {
 	@Id
     @GeneratedValue
     @Column(name = "id")

@@ -20,7 +20,7 @@ import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Table(name="diagnosis")
-public class Diagnos {
+public class Diagnos extends CommonField {
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")

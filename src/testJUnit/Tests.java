@@ -1,8 +1,9 @@
 package testJUnit;
 
+import static logic.OperationsWithCards.getOperationWithCard;
+import static logic.OperationsWithUsers.getOperationWithUsers;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import hibernate.Card;
 import hibernate.Diagnos;
 import hibernate.Disease;
@@ -15,13 +16,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.ToDoubleFunction;
-import java.util.function.ToIntFunction;
-import java.util.function.ToLongFunction;
 
-import logic.OperationsWithCard;
-import logic.OperationsWithUser;
+import logic.OperationWithNotes;
 
 import org.hibernate.Session;
 import org.junit.After;
@@ -35,7 +31,6 @@ public class Tests {
 	ArrayList<Card> cards;
 	
 	public Tests() {
-		// TODO Auto-generated constructor stub
 		users = new ArrayList<>();
 		users.add(new User("Porky1",(short) 0, "134321223", "1111"));
 		users.add(new User("Porky2",(short) 1, "132135223", "0000"));
@@ -52,116 +47,117 @@ public class Tests {
 	}
 	@Test
 	public void testRegisterCard() {
-		OperationsWithUser.deleteAllUsers();
+		getOperationWithUsers().deleteAllObj();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUser.register(users.get(i)))
+			if(!getOperationWithUsers().register(users.get(i)))
 				fail();
 		for(int i = 0; i < users.size(); i++)
-			if(OperationsWithUser.isUserRegisted(users.get(i)) == null)
+			if(getOperationWithUsers().isRegisted(users.get(i)) == null)
 				fail();
 	}
 
 	@Test
 	public void testDeleteUsers() {
 		for(int i = 0; i < users.size(); i++)
-			OperationsWithUser.register(users.get(i));
+			getOperationWithUsers().register(users.get(i));
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUser.delete(users.get(i)))
+			if(!getOperationWithUsers().delete(users.get(i)))
 				fail();
 	}
 	
 	@Test
 	public void testUsersFiltr() {
-		OperationsWithUser.deleteAllUsers();
+		getOperationWithUsers().deleteAllObj();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUser.register(users.get(i)))
+			if(!getOperationWithUsers().register(users.get(i)))
 				fail();
-		if(OperationsWithUser.getAllUsersFiltr("Porky", 
+		if(getOperationWithUsers().getAllObjSatisfyFiltr("Porky", 
 				"",(short) 1,(short) 1).size() != 2)
 			fail();
-		if(OperationsWithUser.getAllUsersFiltr("or", 
+		if(getOperationWithUsers().getAllObjSatisfyFiltr("or", 
 				"132135223",(short) 0,(short) 2).size() != 1)
 			fail();
-		if(OperationsWithUser.getAllUsersFiltr("ork", 
+		if(getOperationWithUsers().getAllObjSatisfyFiltr("ork", 
 				"",(short) 0,(short) 2).size() != 7)
 			fail();
 	}
 	
 	@Test
 	public void testUpdateUser() {
-		OperationsWithUser.deleteAllUsers();
+		getOperationWithUsers().deleteAllObj();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUser.register(users.get(i)))
+			if(!getOperationWithUsers().register(users.get(i)))
 				fail();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUser.update(users.get(i)))
+			if(!getOperationWithUsers().update(users.get(i)))
 				fail();
 	}
 	
 	@Test
 	public void testGetUsers() {
-		OperationsWithUser.deleteAllUsers();
+		getOperationWithUsers().deleteAllObj();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithUser.register(users.get(i)))
+			if(!getOperationWithUsers().register(users.get(i)))
 				fail();
-		List<User> usersP = OperationsWithUser.getAllUsers();
+		List<User> usersP = getOperationWithUsers().getAllObj();
 		for(int i = 0; i < users.size(); ++i)
 			assertTrue(usersP.get(i).equals(users.get(i)));
 	}
 	
 	@Test
 	public void testRegisteCards() {
-		OperationsWithCard.deleteAllCards();
+		getOperationWithCard().deleteAllObj();
 		for(int i = 0; i < users.size(); i++)
-			if(!OperationsWithCard.register(cards.get(i)))
+			if(!getOperationWithCard().register(cards.get(i)))
 				fail();
 		for(int i = 0; i < users.size(); i++)
-			if(OperationsWithCard.isCardRegisted(cards.get(i)) == null)
+			if(getOperationWithCard().isRegisted(cards.get(i)) == null)
 				fail();
 	}
 	@Test
 	public void testDeleteCards() {
 		for(int i = 0; i < cards.size(); i++)
-			OperationsWithCard.register(cards.get(i));
+			getOperationWithCard().register(cards.get(i));
 		for(int i = 0; i < cards.size(); i++)
-			if(!OperationsWithCard.delete(cards.get(i)))
+			if(!getOperationWithCard().delete(cards.get(i)))
 				fail();
 	}
 	
 	@Test
 	public void testCardFiltr() {
-		OperationsWithCard.deleteAllCards();
+		getOperationWithCard().deleteAllObj();
 		for(int i = 0; i < cards.size(); i++)
-			if(!OperationsWithCard.register(cards.get(i)))
+			if(!getOperationWithCard().register(cards.get(i)))
 				fail();
-		if(OperationsWithCard.getAllCardsFiltr("Card", null,(short) 0,(short) 40).size() != 7)
+		if(getOperationWithCard().getAllCardsFiltr("Card", null,(short) 
+				0,(short) 40).size() != 7)
 			fail();
-		if(OperationsWithCard.getAllCardsFiltr("ard", 
+		if(getOperationWithCard().getAllCardsFiltr("ard", 
 				Gender.female,(short) 0,(short) 40).size() != 4)
 			fail();
-		if(OperationsWithCard.getAllCardsFiltr("ork", 
+		if(getOperationWithCard().getAllCardsFiltr("ork", 
 				null,(short) 0,(short) 35).size() != 0)
 			fail();
 	}
 	
 	@Test
 	public void testUpdateCard() {
-		OperationsWithCard.deleteAllCards();
+		getOperationWithCard().deleteAllObj();
 		for(int i = 0; i < cards.size(); i++)
-			if(!OperationsWithCard.register(cards.get(i)))
+			if(!getOperationWithCard().register(cards.get(i)))
 				fail();
 		for(int i = 0; i < cards.size(); i++)
-			if(!OperationsWithCard.update(cards.get(i)))
+			if(!getOperationWithCard().update(cards.get(i)))
 				fail();
 	}
 	
 	@Test
 	public void testGetCards() {
-		OperationsWithCard.deleteAllCards();
+		getOperationWithCard().deleteAllObj();
 		for(int i = 0; i < cards.size(); i++)
-			if(!OperationsWithCard.register(cards.get(i)))
+			if(!getOperationWithCard().register(cards.get(i)))
 				fail();
-		List<Card> cardsP = OperationsWithCard.getAllCards();
+		List<Card> cardsP = getOperationWithCard().getAllObj();
 		for(int i = 0; i < cards.size(); ++i)
 			assertTrue(cardsP.get(i).equals(cards.get(i)));
 	}
@@ -214,7 +210,7 @@ public class Tests {
         session.getTransaction().commit();
         session.close();
 		
-		List<Card> cardsD = OperationsWithCard.getAllCards();
+		List<Card> cardsD = getOperationWithCard().getAllObj();
 		Card cardD = cardsD.get(0);		        
         ArrayList<Note> notesD = cardD.getAllNotes();	
         notesD.sort(new Comparator<Note>() {
@@ -250,7 +246,7 @@ public class Tests {
         	assertTrue(user[i].equals(userD));
         	assertTrue(note[i].equals(noteD));
         	assertTrue(card.equals(cardD));
-        	assertTrue(sessions[i].equals(sessionD));
+        	assertTrue(sessions[i].equals(sessionD));        	
         	assertTrue(diagnos[i].equals(diagnosD));
         	assertTrue(disease[i].equals(diseaseD));
         }
@@ -261,8 +257,8 @@ public class Tests {
 	public void cleanAllTables() {
 		Session session = DatabaseConnect.getSessionFactory().openSession();
         session.beginTransaction();
-        String tablesName[]  = {"card", "diagnosis", "diseases", "groups", "notes",
-        		"session", "users"};
+        String tablesName[]  = {"cards", "diagnosis", "diseases", "groups", "notes",
+        		"sessions", "users"};
         session.createSQLQuery("SET FOREIGN_KEY_CHECKS = 0").executeUpdate();
         for(int i = 0; i < tablesName.length; ++i) {
         	session.createSQLQuery("TRUNCATE " + tablesName[i]).executeUpdate();

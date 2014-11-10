@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name="users")
-public class User {
+public class User extends CommonField{
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")

@@ -1,149 +1,75 @@
 package logic;
+
 import hibernate.User;
-import hibernateConnect.DatabaseConnect;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
+import logic.OperationsWithUsers.Filtr;
 
-import org.hibernate.HibernateException;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 
-import exceptions.ProjectException;
+public class OperationsWithUsers extends CommonOperations<User, Filtr> {
 
-
-
-public class OperationsWithUsers {
-	public static boolean delete(User user) {
-		if ((user = isUserRegisted(user)) == null)
-			return false;
-		else {
-			Session session = null;
-            try {
-                session = DatabaseConnect.getSessionFactory().openSession();
-                session.beginTransaction();
-                session.delete(user);
-                session.getTransaction().commit();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), 
-                		"Ошибка I/O", JOptionPane.OK_OPTION);
-            } finally {
-                if (session != null && session.isOpen()) {
-                    session.close();
-                }
-            }
-            return true;
-		}
+	private static OperationsWithUsers operWithUsers = null;
+	
+	private OperationsWithUsers() {}
+	
+	public static OperationsWithUsers getOperationWithUsers() {
+		if (operWithUsers == null)
+			operWithUsers = new OperationsWithUsers();
+		return operWithUsers;
 	}
 	
-	public static boolean register(User user) {
-		Session session = null;
-		try {
-			session = DatabaseConnect.getSessionFactory().openSession();
-			List<User> users = session.createCriteria(User.class).add( 
-					Restrictions.like("name", user.getName())).list();
-			if ( users.isEmpty()) {
-				Transaction transaction = session.beginTransaction();				
-	            session.save(user);
-	            transaction.commit();
-			}
-			else return false;
-		} catch (HibernateException e) {
-			exceptions.ProjectException.sentExceptionMassege("Problem " +
-					e.getMessage());
-			return false;
-		} finally {
-			if(session != null && session.isOpen()) {
-				session.close();
-			}			
-		}
-		return true;
-	}	
-	
-	public static User isUserRegisted(User user) {
-		Session session = null;
-		try {
-			session = DatabaseConnect.getSessionFactory().openSession();
-			List<User> users = session.createCriteria(User.class).add( 
-					Restrictions.like("name", user.getName())).add(
-					Restrictions.like("pwd", user.getPwd())).list();
-			switch (users.size()) {
-				case 0 : return null;
-				case 1 : user = users.get(0); break;
-				default : throw new ProjectException(String.valueOf(users.size()) +
-						" identical records");
-			}
-		} catch (HibernateException e) {
-			exceptions.ProjectException.sentExceptionMassege("Problem " +
-		e.getMessage());
-			return null;
-		} catch (ProjectException e) {
-			exceptions.ProjectException.sentExceptionMassege("Problem " +
-					e.getMessage());
-		} finally {
-			if(session != null && session.isOpen()) {
-				session.close();
-			}			
-		}
-		return user;
-	}
-	
-	public static boolean update(User user) {
-		User curUser = user;
-		if ((curUser = isUserRegisted(curUser)) == null)
-			return false;
-		else {
-			Session session = null;
-			user.setId(curUser.getId());
-            try {
-                session = DatabaseConnect.getSessionFactory().openSession();
-                session.beginTransaction();
-                session.update(user);
-                session.getTransaction().commit();
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Ошибка I/O", 
-                		JOptionPane.OK_OPTION);
-            } finally {
-                if (session != null && session.isOpen()) {
-                    session.close();
-                }
-            }
-            return true;
+	class Filtr {
+		private String name;
+		private String phone;
+		private Short access_levelLow;
+		private Short access_levelHight;
+		
+		Filtr(String name, String pwd,
+				String phone, Short access_levelLow, Short access_levelHight) {
+			this.name = name;
+			this.phone = phone;
+			this.access_levelLow = access_levelLow;
+			this.access_levelHight = access_levelHight;
 		}
 	}
-	 
-	public static List<User> getAllUsers() {
-		return getAllUsersFiltr("", "", new Short((short) 0), new Short((short)2));
+
+	@Override
+	Criteria getRegisterCriteria(Session session, User user) {
+		return session.createCriteria(User.class).add( 
+				Restrictions.eq("name", user.getName())).add(
+				Restrictions.eq("pwd", user.getPwd()));
+	}
+
+	@Override
+	Criteria getFiltrCriteria(Session session, Filtr filtr) {
+		Criteria criteria = session.createCriteria(User.class).add(Restrictions.
+				like("name", "%" + filtr.name + "%")).add(Restrictions.like("phone",
+						"%" + filtr.phone + "%"));
+		if (filtr.access_levelHight != null && filtr.access_levelLow != null)
+			criteria.add(Restrictions.between("access_level", 
+	        		filtr.access_levelLow, filtr.access_levelHight));
+        return criteria.addOrder(Order.asc("name"));
+	}
+
+	@Override
+	Criteria getAllObjCriteria(Session session) {
+		return session.createCriteria(User.class);
 	}
 	
-	@SuppressWarnings({"deprecation", "unchecked" })
-	public static List<User> getAllUsersFiltr(String name, 
+	public ArrayList<User> getAllObjSatisfyFiltr(String name, 
 			String phone, Short access_levelLow, Short access_levelHight) {
-		Session session = null;
-        List<User> users = null;
-        try {
-            session = DatabaseConnect.getSessionFactory().openSession();
-            users = session.createCriteria(User.class).add(Restrictions.like("name", 
-            		"%" + name + "%")).add(Restrictions.like("phone", "%" + 
-            		phone + "%")).add(Restrictions.between("access_level", 
-            		access_levelLow, access_levelHight)).addOrder(Order.asc("name")
-            				).list();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(),
-            		"Ошибка I/O", JOptionPane.OK_OPTION);
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-        return users;
+		return getAllObjSatisfyFiltr(new Filtr(name, null, phone, access_levelLow,
+				access_levelHight));
 	}
-	
-	public static void deleteAllUsers() {
-		for(User user:getAllUsers())
-			delete(user);
+
+	@Override
+	boolean isRegistedMethodNotNeed() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

@@ -14,7 +14,7 @@ import org.hibernate.annotations.Type;
 
 @Entity
 @Table(name="notes")
-public class Note {
+public class Note extends CommonField {
 	@Id
     @GeneratedValue
     @Column(name = "id")	

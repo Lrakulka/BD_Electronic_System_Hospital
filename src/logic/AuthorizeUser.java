@@ -5,9 +5,10 @@ import hibernate.User;
 public class AuthorizeUser {
 	private static User authorizeUser = null;
 	
-	public static boolean authorize(User user) {
-		if (((user = OperationsWithUsers.isUserRegisted(user)) != null)
-				&& (user.getAccess_level() == 2)){   // User with admin rights
+	public static boolean authorizeUser(String name, String pwd) {
+		User user = new User(name, null, "", pwd);
+		if (((user = OperationsWithUsers.getOperationWithUsers().isRegisted(user)) != 
+				null) && (user.getAccess_level() == 2)){   // User with admin rights
 				authorizeUser = user;
 				return true;
 			}
@@ -18,7 +19,7 @@ public class AuthorizeUser {
 		return authorizeUser;
 	}
 	
-	public static boolean isUserAuthorize() {
+	public static boolean isAuthorizeUser() {
 		if (authorizeUser == null)
 			return false;
 		else return true;
