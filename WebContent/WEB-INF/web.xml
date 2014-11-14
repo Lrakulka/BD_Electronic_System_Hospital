@@ -5,13 +5,30 @@
   <servlet>
     <display-name>User</display-name>
     <servlet-name>User</servlet-name>
-    <servlet-class>PagesServlets.AuthorizeServlet</servlet-class>
+    <servlet-class>pagesServlets.AuthorizeServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>User</servlet-name>
     <url-pattern>/LogIn</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <display-name>Log out from acount</display-name>
+    <servlet-name>LogOut</servlet-name>
+    <servlet-class>pagesServlets.LogOutServelet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>LogOut</servlet-name>
+    <url-pattern>/LogOutServlet</url-pattern>
+  </servlet-mapping>
+  <filter>
+        <filter-name>myFilter</filter-name>
+        <filter-class>pagesServlets.MyFilter</filter-class>
+  </filter>
+  <filter-mapping>
+      <filter-name>myFilter</filter-name>
+      <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <welcome-file-list>
-    <welcome-file>Authorize.jsp</welcome-file>
+     <welcome-file>Authorize.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

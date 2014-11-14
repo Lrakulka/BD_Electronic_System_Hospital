@@ -13,7 +13,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/mysql-connector-java-5.1.33-bin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/antlr-2.7.7.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/c3p0-0.9.2.1.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/ehcache-core-2.4.3.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/hibernate-c3p0-4.3.6.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/hibernate-commons-annotations-4.0.5.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/hibernate-core-4.3.6.Final.jar"/>
@@ -26,10 +30,6 @@
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/hibernate-jpamodelgen-4.3.6.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/hibernate-osgi-4.3.6.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/hibernate-proxool-4.3.6.Final.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/antlr-2.7.7.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/c3p0-0.9.2.1.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/dom4j-1.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/ehcache-core-2.4.3.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/infinispan-commons-6.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/infinispan-core-6.0.0.Final.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/jandex-1.1.0.Final.jar"/>
@@ -47,9 +47,6 @@
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/proxool-0.8.3.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/rhq-pluginAnnotations-3.0.4.jar"/>
 	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/slf4j-api-1.6.1.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/required/hibernate-core-4.3.6.Final.jar"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/hibernate-release-4.3.6.Final/lib/required/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/rt.jar"/>
+	<classpathentry kind="lib" path="D:/Program Files/adt-bundle-windows-x86_64-20140624/eclipse/jre1.8.0_05/lib/mysql-connector-java-5.1.33-bin.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

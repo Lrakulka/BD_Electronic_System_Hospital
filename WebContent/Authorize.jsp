@@ -22,5 +22,12 @@
         <p />
         <input type="submit" value="Log in" />
     </form>
+    <%     
+    	String value = (String) session.getAttribute("ErrorLogIn");
+    	if (value != null && value.equals("TRUE")) {
+    		out.println("<h1><font color=\"red\">Incorrect password or login or access level or something else</font></h1>");    
+    		session.removeAttribute("ErrorLogIn");
+    	}
+    %>
 </body>
 </html>

@@ -24,4 +24,8 @@ public class AuthorizeUser {
 			return false;
 		else return true;
 	}
+	
+	public static void setUserLogOut() {
+		authorizeUser = null;
+	}
 }

@@ -44,7 +44,7 @@ public class OperationsWithGroups extends CommonOperations<Group, Filtr>{
 
 	@Override
 	Criteria getRegisterCriteria(Session session, Group object) {
-		return session.createCriteria(Group.class).add(Restrictions.eqOrIsNull("name", 
+		return session.createCriteria(Group.class).add(Restrictions.eq("name", 
 				object.getName()));
 	}
 
