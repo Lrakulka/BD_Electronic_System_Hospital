@@ -3,7 +3,7 @@ package logic;
 import hibernate.User;
 
 public class AuthorizeUser {
-	private static User authorizeUser = null;
+	private static User authorizeUser = new User();//null;
 	
 	public static boolean authorizeUser(String name, String pwd) {
 		User user = new User(name, null, "", pwd);
