@@ -40,9 +40,12 @@ public class OperationsWithUsers extends CommonOperations<User, Filtr> {
 
 	@Override
 	Criteria getRegisterCriteria(Session session, User user) {
-		return session.createCriteria(User.class).add( 
+		if (user.getId() == null)
+			return session.createCriteria(User.class).add( 
 				Restrictions.eq("name", user.getName())).add(
 				Restrictions.eq("pwd", user.getPwd()));
+		else return session.createCriteria(User.class).add( 
+				Restrictions.eq("id", user.getId()));
 	}
 
 	@Override
