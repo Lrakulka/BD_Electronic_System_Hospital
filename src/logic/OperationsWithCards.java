@@ -28,22 +28,25 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 		private Short age_low;
 		private Short age_hight;
 		private Gender sex;
+		private Boolean isAgain;
 		
 		Filtr(String name, 
-				Gender gender, Short age_levelLow, Short age_levelHight) {
+				Gender gender, Short age_levelLow, Short age_levelHight, Boolean isAgain) {
 			this.name = name;
 			this.sex = gender;
 			this.age_low = age_levelLow;
 			this.age_hight = age_levelHight;
+			this.isAgain = isAgain;
 		}		
 	}
 
 	@Override
 	Criteria getRegisterCriteria(Session session, Card card) {
 		return session.createCriteria(Card.class).add( 
-				Restrictions.like("name", card.getName())).add(
-				Restrictions.like("age", card.getAge())).add(
-						Restrictions.like("sex", card.getSex()));
+				Restrictions.eq("name", card.getName())).add(
+				Restrictions.eq("age", card.getAge())).add(
+				Restrictions.eq("sex", card.getSex())).add(
+				Restrictions.eq("isAgain", card.getIsAgain()));
 	}
 
 	@Override
@@ -54,6 +57,8 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 			criteria.add(Restrictions.between("age", filtr.age_low, filtr.age_hight));
 		if (filtr.sex != null) 
 			criteria = criteria.add(Restrictions.eq("sex", filtr.sex));
+		if (filtr.isAgain != null) 
+			criteria = criteria.add(Restrictions.eq("isAgain", filtr.isAgain));
 		return criteria.addOrder(Order.asc("name"));
 	}
 
@@ -63,9 +68,9 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 	}
 
 	public ArrayList<Card> getAllCardsFiltr(String name, 
-			Gender gender, Short age_levelLow, Short age_levelHight) {
+			Gender gender, Short age_levelLow, Short age_levelHight, Boolean isAgain) {
 		return getAllObjSatisfyFiltr(new Filtr(name, gender, age_levelLow,
-				age_levelHight));
+				age_levelHight, isAgain));
 	}
 
 	@Override

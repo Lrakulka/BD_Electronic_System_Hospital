@@ -11,6 +11,4 @@ public class CommonField {
 	public void setId(Integer id) {
 		this.id = id;
 	}  
-	
-	
 }

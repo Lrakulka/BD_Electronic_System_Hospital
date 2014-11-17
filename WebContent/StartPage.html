@@ -11,10 +11,14 @@
 			<td><a href="UserList.jsp"><button>List of Users</button></a></td>
 		</tr>
 		<tr>
-			<td><a href="NewFile.jsp"><button>List of Cards</button></a></td>
+			<td><a href="CardList.jsp"><button>List of Cards</button></a></td>
 		</tr>
 		<tr>
-			<td><a href="NewFile.jsp"><button>Add user</button></a></td>
+			<td><form action="AddModifyUer.jsp" method="post">
+					<input type="hidden" name="UserAdd" value="True">
+					<input type="submit" value="Add user">
+					</form>
+			</td>
 		</tr>
 		<tr>
 			<td><a href="NewFile.jsp"><button>Add card</button></a></td>

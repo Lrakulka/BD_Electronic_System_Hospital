@@ -10,7 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import logic.AuthorizeUser;
 
-public class LogOutServelet extends HttpServlet {
+public class LogOutServlet extends HttpServlet {
 
 	/**
 	 * 

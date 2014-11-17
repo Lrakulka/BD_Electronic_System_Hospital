@@ -6,14 +6,26 @@
 <html>
 <head>
     <title>
-        Таблица пользователей
+        Таблиця користувачів
     </title>
-</head>
- 
+</head> 
 <body>
-    <h1>List of Users</h1>
-	<form name="UserListForm" method="post">
-	    <table border="1" cellpadding="8">
+   <%  if (request.getParameter("ButtonDelete") != null) {
+	    	User user = new User();
+	    	user.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
+	    	OperationsWithUsers.getOperationWithUsers().deleteById(user);
+    	} 
+		if (request.getParameter("ButtonModify") != null){
+			System.out.print(request.getParameter("ButtonModify"));
+    		request.getSession().setAttribute("ButtonModify", Integer.
+    				valueOf(request.getParameter("ButtonModify")));
+    		response.sendRedirect("AddModifyUer.jsp");
+    	}
+   	
+    %>
+    <h1>List of Users</h1>		
+    <table border="1" cellpadding="8">	    	
+		<form name="UserListForm" method="post">
 	    	<tr>
 	    		<%	if (request.getParameter("userName") != null) {
 	    				out.print("<th><input type=\"text\" name=\"userName\" value=\"" + 
@@ -24,48 +36,60 @@
 	    						" value=\"" + 
 	    					request.getParameter("userLowAccessLevel") + 
 		    					"\" size=\"1\" />");
-	    				out.print("H:<input type=\"text\" name=\"userHightAccessLevel\" value=\"" + 
-	    					request.getParameter("userHightAccessLevel") + 
+	    				out.print(" H:<input type=\"text\" name=\"userHightAccessLevel\" " + 
+		    					"value=\"" + request.getParameter("userHightAccessLevel") + 
 	    					"\" size=\"1\" /></th>");
 	    			}
 		    		else {
-		    			out.println("<th><input type=\"text\" name=\"userName\" size=\"20\" /></th>");
-		    			out.println("<th><input type=\"text\" name=\"userPhone\" size=\"20\" /></th>");
-		    			out.println("<th><input type=\"text\" name=\"userLowAccessLevel\" size=\"5\" value=\"0\"/>"); 
-		    			out.println("<input type=\"text\" name=\"userHightAccessLevel\" size=\"5\" value=\"2\"/></th>");
+		    			out.println("<th><input type=\"text\" name=\"userName\" size=" +
+		    					"\"20\" /></th>");
+		    			out.println("<th><input type=\"text\" name=\"userPhone\" size=" +
+		    					"\"20\" /></th>");
+		    			out.println("<th>L:<input type=\"text\" name=\"userLowAcces" +
+		    					"sLevel\" size=\"1\" value=\"0\"/>"); 
+		    			out.println("H:<input type=\"text\" name=\"userHightAccessLev" +
+		    					"el\" size=\"1\" value=\"2\"/></th>");
 		    		}
     			%>
 	            <th><input type="submit" name="submit" value="Use filters" size="15" /></th>
-	        </tr>     
-	        <tr>
-	            <th>Name</th>
-	            <th>Phone</th>
-	            <th>Access level</th>
-	        </tr>      
-	            <% 	ArrayList<User> users;
-	            	if (request.getParameter("userName") != null) {
-	            		users = OperationsWithUsers.getOperationWithUsers().
-	            			getAllObjSatisfyFiltr(request.getParameter("userName"), 
-	            				request.getParameter("userPhone"), 
-	            				Short.valueOf(request.getParameter("userLowAccessLevel")), 
-	            				Short.valueOf(request.getParameter("userHightAccessLevel")));
-	            	}
-	            	else {
-	            		users = OperationsWithUsers.getOperationWithUsers().
-	            				getAllObjSatisfyFiltr("", "", (short) 0, (short) 2);
-	            	}
-	            	for(int i = 0; i < users.size(); ++i){
-	                out.println("<tr>");
-	                out.println("<td>" + users.get(i).getName() + "</td>");
-	                out.println("<td>" + users.get(i).getPhone() + "</td>");
-	                out.println("<td>" + users.get(i).getAccess_level() + "</td>");  
-	                if( users.get(i).equals(AuthorizeUser.getAuthorizeUser()))
-	                	out.println("<td>It's you</td>");  
-	                else out.println("<td><button>Delete</button><button>Modifier</button></td>");  
-	                out.println("</tr>");
-	            } %>
-	    </table>
-    </form>
+	        </tr> 
+        </form>    
+        <tr>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Access level</th>
+        </tr>      
+       	<form name="ModifyUser" method="post">
+            <% 	ArrayList<User> users;
+            	if (request.getParameter("userName") != null) {
+            		users = OperationsWithUsers.getOperationWithUsers().
+            			getAllObjSatisfyFiltr(request.getParameter("userName"), 
+            				request.getParameter("userPhone"), 
+            				Short.valueOf(request.getParameter("userLowAccessLevel")), 
+            				Short.valueOf(request.getParameter("userHightAccessLevel")));
+            	}
+            	else {
+            		users = OperationsWithUsers.getOperationWithUsers().
+            				getAllObj();
+            	}
+            	for(int i = 0; i < users.size(); ++i){
+                out.println("<tr>");
+                out.println("<td>" + users.get(i).getName() + "</td>");
+                out.println("<td>" + users.get(i).getPhone() + "</td>");
+                out.println("<td>" + users.get(i).getAccess_level() + "</td>");  
+                if( users.get(i).equals(AuthorizeUser.getAuthorizeUser()))
+                	out.println("<td>It's you</td>");  
+                else out.println("<td><button name=\"ButtonDelete\" value=\"" +
+                		users.get(i).getId() + "\">Delete</button>" +
+                		"<button name=\"ButtonModify\" value=\"" +
+                    	users.get(i).getId() + "\">Modify</button>" + 
+            			"<button name=\"ButtonenterLikeThisUser\" value=\"" +
+                    	users.get(i).getId() + "\"><font color=\"blue\">Enter" +
+                				" as this user</font></button></td>");  
+                out.println("</tr>");
+            } %>
+        </form>
+    </table>
     <form action="LogOutServlet" method="post">
 		<input type="submit" value="Logout" >
 	</form>

@@ -130,13 +130,13 @@ public class Tests {
 			if(!getOperationWithCard().register(cards.get(i)))
 				fail();
 		if(getOperationWithCard().getAllCardsFiltr("Card", null,(short) 
-				0,(short) 40).size() != 7)
+				0,(short) 40, null).size() != 7)
 			fail();
 		if(getOperationWithCard().getAllCardsFiltr("ard", 
-				Gender.female,(short) 0,(short) 40).size() != 4)
+				Gender.female,(short) 0,(short) 40, null).size() != 4)
 			fail();
 		if(getOperationWithCard().getAllCardsFiltr("ork", 
-				null,(short) 0,(short) 35).size() != 0)
+				null,(short) 0,(short) 35, null).size() != 0)
 			fail();
 	}
 	

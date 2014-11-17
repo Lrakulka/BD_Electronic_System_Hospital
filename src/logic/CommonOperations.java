@@ -47,6 +47,24 @@ abstract class CommonOperations<I extends CommonField, Filtr> {
 		}
 	}
 	
+	public boolean deleteById(I object) {
+		Session session = null;
+        try {
+            session = DatabaseConnect.getSessionFactory().openSession();
+            session.beginTransaction();
+            session.delete(object);
+            session.getTransaction().commit();
+        } catch (Exception e) {
+        	ProjectException.showMessage("Delete " + object.toString(), e);
+        	return false;
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+        return true;
+	}
+	
 	@SuppressWarnings("unchecked")
 	protected ArrayList<I> getAllObjSatisfyFiltr(Filtr filtr) {
 		Session session = null;
