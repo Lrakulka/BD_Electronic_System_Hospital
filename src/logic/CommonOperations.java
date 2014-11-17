@@ -87,7 +87,7 @@ abstract class CommonOperations<I extends CommonField, Filtr> {
 		Session session = null;
 		try {
 			session = DatabaseConnect.getSessionFactory().openSession();
-			if (isRegisted(object) == null) {
+			if ( isRegistedMethodNotNeed() || isRegisted(object) == null) {
 				Transaction transaction = session.beginTransaction();				
 	            session.save(object);
 	            transaction.commit();
@@ -128,9 +128,8 @@ abstract class CommonOperations<I extends CommonField, Filtr> {
 					session.close();
 				}			
 			}
-			return object;
 		}
-		return null;
+		return object;
 	}
 	
 	public boolean update(I object) {

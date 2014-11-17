@@ -10,6 +10,10 @@
     </title>
 </head> 
 <body>
+    <form action="LogOutServlet" method="post">
+	<input type="submit" value="Logout" >
+	</form>
+	<a href="StartPage.html"><button>Main page</button></a>
    <%  if (request.getParameter("ButtonDelete") != null) {
 	    	Card card = new Card();
 	    	card.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
@@ -86,8 +90,5 @@
             } %>
         </form>
     </table>
-    <form action="LogOutServlet" method="post">
-		<input type="submit" value="Logout" >
-	</form>
 </body>
 </html>

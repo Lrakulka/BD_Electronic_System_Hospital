@@ -31,6 +31,10 @@
 			</tr>
 		</table>
 	</form>
+	 <form action="LogOutServlet" method="post">
+		<input type="submit" value="Logout" >
+	</form>
+	<a href="StartPage.html"><button>Main page</button></a>
 	<h1>Disease table</h1>
 	<form name="deleteDisease" method="post">
 		<table border="1" cellpadding="8">

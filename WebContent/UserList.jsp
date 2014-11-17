@@ -10,6 +10,10 @@
     </title>
 </head> 
 <body>
+    <form action="LogOutServlet" method="post">
+	<input type="submit" value="Logout" >
+	</form>
+	<a href="StartPage.html"><button>Main page</button></a>
    <%  if (request.getParameter("ButtonDelete") != null) {
 	    	User user = new User();
 	    	user.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
@@ -19,7 +23,7 @@
 			System.out.print(request.getParameter("ButtonModify"));
     		request.getSession().setAttribute("ButtonModify", Integer.
     				valueOf(request.getParameter("ButtonModify")));
-    		response.sendRedirect("AddModifyUer.jsp");
+    		response.sendRedirect("AddModifyUser.jsp");
     	}
    	
     %>
@@ -90,8 +94,5 @@
             } %>
         </form>
     </table>
-    <form action="LogOutServlet" method="post">
-		<input type="submit" value="Logout" >
-	</form>
 </body>
 </html>
