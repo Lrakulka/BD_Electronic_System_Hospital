@@ -21,7 +21,7 @@ public class OperationsWithDiseases extends CommonOperations<Disease, Filtr> {
 	
 	private OperationsWithDiseases() {}
 	
-	public OperationsWithDiseases getOperationsWithDiseases() {
+	public static OperationsWithDiseases getOperationsWithDiseases() {
 		if (oper == null)
 			oper = new OperationsWithDiseases();
 		return oper;
@@ -42,12 +42,13 @@ public class OperationsWithDiseases extends CommonOperations<Disease, Filtr> {
 	@Override
 	Criteria getRegisterCriteria(Session session, Disease object) {
 		// TODO Auto-generated method stub
-		return null;
+		return session.createCriteria(Disease.class).add(Restrictions.like("name", 
+				object.getName()));
 	}
 
 	@Override
 	boolean isRegistedMethodNotNeed() {
 		// TODO Auto-generated method stub
-		return true;
+		return false;
 	}
 }

@@ -128,8 +128,9 @@ abstract class CommonOperations<I extends CommonField, Filtr> {
 					session.close();
 				}			
 			}
+			return object;
 		}
-		return object;
+		return null;
 	}
 	
 	public boolean update(I object) {

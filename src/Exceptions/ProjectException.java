@@ -14,6 +14,6 @@ public class ProjectException extends Exception {
 	}
 	
 	public static void showMessage(String message, Exception e) {
-		
+		System.out.print(message + "Error log \n" + e);
 	}
 }
