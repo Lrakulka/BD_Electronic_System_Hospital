@@ -14,14 +14,21 @@
 </head>
 <body>
 	<!-- Shito kod -->
-	<%!	User user = new User("", null, "", "");%>
-	<%	if (request.getParameter("Save") != null) {
+	<%!	User user;%>
+	<%	user = new User("", null, "", "");
+	 	if (request.getParameter("ButtonCardOpen") != null) {
+			request.getSession().setAttribute("ButtonModify", 
+					Integer.valueOf(request.getParameter("ButtonCardOpen")));
+			response.sendRedirect("ModifyCard.jsp");
+		}
+		if (request.getParameter("Save") != null) {
 			boolean status;
 			user = new User(request.getParameter("userName"), 
 					Short.valueOf(request.getParameter("userAccess_level")),
 					request.getParameter("userPhone"), request.getParameter("userPwd"));
 			if (!request.getParameter("UserId").equals("null")) {
 				user.setId(Integer.valueOf(request.getParameter("UserId")));
+				request.setAttribute("ButtonModify", Integer.valueOf(request.getParameter("UserId")));
 				status = OperationsWithUsers.getOperationWithUsers().update(user);
 			} else status = OperationsWithUsers.getOperationWithUsers().register(user);
 			if( status)
@@ -32,11 +39,16 @@
 			out.print("<h1>Add new user</h1>");
 		}
 		else {
-			if (request.getSession().getAttribute("ButtonModify") != null) {
-				request.setAttribute("ButtonModify", 
+			System.out.println(request.getParameter("ButtonModify"));
+			if (request.getParameter("ButtonModify") != null ||
+					request.getSession().getAttribute("ButtonModify") != null) {
+				if (request.getParameter("ButtonModify") != null)
+					request.setAttribute("ButtonModify", 
+							Integer.valueOf(request.getParameter("ButtonModify")));
+				else request.setAttribute("ButtonModify", 
 						request.getSession().getAttribute("ButtonModify"));
 				request.getSession().setAttribute("ButtonModify", 
-						request.getSession().getAttribute("ButtonModify"));
+						request.getAttribute("ButtonModify"));
 				//request.getSession().removeAttribute("ButtonModify");
 			}
 			out.print("<h1>Modify user</h1>");
@@ -80,7 +92,7 @@
     <form action="LogOutServlet" method="post">
 		<input type="submit" value="Logout" >
 	</form>
-	<a href="StartPage.html"><button>Main page</button></a>
+	<a href="StartPage.jsp"><button>Main page</button></a>
 	<% if (request.getParameter("UserAdd") == null) {
 			out.println("<h1>Notes</h1>");
 			ArrayList<Note> notes = user.getAllNotes();
@@ -97,7 +109,7 @@
 					"<form name=\"Note #" + (1 + i) + "\" method=\"post\">" +
 					"<h2>Note " + (i + 1) + 
 					" Card name <button value=\"" + notes.get(i).getCard().getId() +
-					"\" name=\"ButtonNoteOpen\" >" + notes.get(i).getCard().getName() 
+					"\" name=\"ButtonCardOpen\" >" + notes.get(i).getCard().getName() 
 					+ "</button></h2>" +
 					"<textarea cols=\"40\" rows=\"3\" name=\"userNote\">" + 
 							notes.get(i).getHidden_note() + "</textarea>" + 
@@ -106,10 +118,12 @@
 					"</button><button value=\"" + notes.get(i).getId() + 
 					"\" name=\"ButtonNoteDelete\" >Delete" +
 					"</button><button value=\"" + notes.get(i).getId() + 
-					"\" name=\"ButtonNoteCencel\" >Cencel</button>" +
+					"\" name=\"ButtonNoteCencel\" >Cancel</button>" +
 					"Hide note <input type=\"text\" name=\"userNoteIsHide\" size=\"1\" value=\"" + 
 					notes.get(i).getHide() + "\">Date <input type=\"text\" name=\"userNoteDate\"" +
-					"size=\"5\" value=\"" + notes.get(i).getDate().toString() + "\"></form><br>");
+					"size=\"5\" value=\"" + notes.get(i).getDate().toString() + "\">" + 
+					"<input type=\"hidden\" name=\"ButtonModify\" value=\"" + 
+					user.getId() + "\"></form><br>");
 			}
 	    }
 	%>

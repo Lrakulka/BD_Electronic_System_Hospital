@@ -18,7 +18,7 @@ public class AuthorizeServlet extends HttpServlet{
 	            HttpServletResponse response) throws ServletException, IOException {
 		 	if (AuthorizeUser.authorizeUser(request.getParameter("userName"),
 		 			request.getParameter("password")))
-	            response.sendRedirect("StartPage.html");
+	            response.sendRedirect("StartPage.jsp");
 		 	else {
 		 		response.sendRedirect("Authorize.jsp");
 		 	}

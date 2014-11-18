@@ -121,7 +121,7 @@ abstract class CommonOperations<I extends CommonField, Filtr> {
 				ProjectException.showMessage("IsRegisted Hibernet " + object.toString(), e);
 				return null;
 			} catch (ProjectException e) {
-				ProjectException.showMessage("IsRegisted " + object.toString(), e);
+				e.showMessage();
 				return null;
 			} finally {
 				if(session != null && session.isOpen()) {

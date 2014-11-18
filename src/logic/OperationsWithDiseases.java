@@ -41,8 +41,9 @@ public class OperationsWithDiseases extends CommonOperations<Disease, Filtr> {
 
 	@Override
 	Criteria getRegisterCriteria(Session session, Disease object) {
-		// TODO Auto-generated method stub
-		return session.createCriteria(Disease.class).add(Restrictions.like("name", 
+		if (object.getId() != null)
+			return session.createCriteria(Disease.class).add(Restrictions.eq("id", object.getId()));
+		else return session.createCriteria(Disease.class).add(Restrictions.like("name", 
 				object.getName()));
 	}
 

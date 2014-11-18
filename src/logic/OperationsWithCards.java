@@ -42,7 +42,10 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 
 	@Override
 	Criteria getRegisterCriteria(Session session, Card card) {
-		return session.createCriteria(Card.class).add( 
+		if (card.getId() != null)
+			return session.createCriteria(Card.class).add(
+					Restrictions.eqOrIsNull("id", card.getId()));
+		else return session.createCriteria(Card.class).add( 
 				Restrictions.eq("name", card.getName())).add(
 				Restrictions.eq("age", card.getAge())).add(
 				Restrictions.eq("sex", card.getSex())).add(

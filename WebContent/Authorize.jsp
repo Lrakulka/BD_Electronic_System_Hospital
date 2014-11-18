@@ -1,3 +1,4 @@
+<%@page import="logic.AuthorizeUser"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -24,7 +25,7 @@
     </form>
     <%     
     	String value = (String) session.getAttribute("ErrorLogIn");
-    	if (value != null && value.equals("TRUE")) {
+    	if (value != null && value.equals("TRUE") && !AuthorizeUser.isAuthorizeUser()) {
     		out.println("<h1><font color=\"red\">Incorrect password or login or access level or something else</font></h1>");    
     		session.removeAttribute("ErrorLogIn");
     	}

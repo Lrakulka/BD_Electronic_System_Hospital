@@ -13,14 +13,13 @@
     <form action="LogOutServlet" method="post">
 	<input type="submit" value="Logout" >
 	</form>
-	<a href="StartPage.html"><button>Main page</button></a>
+	<a href="StartPage.jsp"><button>Main page</button></a>
    <%  if (request.getParameter("ButtonDelete") != null) {
 	    	User user = new User();
 	    	user.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
 	    	OperationsWithUsers.getOperationWithUsers().deleteById(user);
     	} 
-		if (request.getParameter("ButtonModify") != null){
-			System.out.print(request.getParameter("ButtonModify"));
+		if (request.getParameter("ButtonModify") != null) {
     		request.getSession().setAttribute("ButtonModify", Integer.
     				valueOf(request.getParameter("ButtonModify")));
     		response.sendRedirect("AddModifyUser.jsp");

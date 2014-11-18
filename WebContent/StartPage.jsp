@@ -1,3 +1,6 @@
+<%@page import="logic.AuthorizeUser"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,13 +24,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td><a href="NewFile.jsp"><button>Add card</button></a></td>
-		</tr>
-		<tr>
 			<td><a href="Disease.jsp"><button>Disease</button></a></td>
 		</tr>
 		<tr>
-			<td><a href="NewFile.jsp"><button>Account options</button></a></td>
+			<td><form action="AddModifyUser.jsp" method="post">
+					<button name="ButtonModify" value=
+					"<%=AuthorizeUser.getAuthorizeUser().getId()%>">Account options</button>
+                </form>
+			</td>
 		</tr>
 		<tr>
 			<td><a href="NewFile.jsp"><button>Change to doctor mod (Vitalin project)</button></a></td>

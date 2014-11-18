@@ -13,12 +13,17 @@
     <form action="LogOutServlet" method="post">
 	<input type="submit" value="Logout" >
 	</form>
-	<a href="StartPage.html"><button>Main page</button></a>
+	<a href="StartPage.jsp"><button>Main page</button></a>
    <%  if (request.getParameter("ButtonDelete") != null) {
 	    	Card card = new Card();
 	    	card.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
 	    	OperationsWithCards.getOperationWithCard().deleteById(card);
     	}
+   	   if (request.getParameter("ButtonModify") != null) {
+			request.getSession().setAttribute("ButtonModify", 
+					Integer.valueOf(request.getParameter("ButtonModify")));
+			response.sendRedirect("ModifyCard.jsp");
+		}
     %>
     <h1>List of Cards</h1>		
     <table border="1" cellpadding="8">	    	
@@ -61,7 +66,7 @@
             <th>Patient Age</th>
             <th>Patient IsAgain</th>
         </tr>      
-       	<form action="ModifyCard" method="post">
+       	<form name="ModifyCard" method="post">
             <% 	ArrayList<Card> cards;
             	if (request.getParameter("cardName") != null) {
             		cards = OperationsWithCards.getOperationWithCard().
@@ -83,9 +88,8 @@
                 out.println("<td>" + cards.get(i).getIsAgain() + "</td>");
                 out.println("<td><button name=\"ButtonDelete\" value=\"" +
                		cards.get(i).getId() + "\">Delete</button>" +
-               		"<input type=\"hidden\" name=\"ButtonModify\"" +
-               		" value=\"" + cards.get(i).getId() +
-               		"\"><input type=\"submit\" value=\"Modify\"></td>");  
+               		"<button name=\"ButtonModify\" value=\"" +
+                       		cards.get(i).getId() + "\">Modify</button></td>");  
                 out.println("</tr>");
             } %>
         </form>

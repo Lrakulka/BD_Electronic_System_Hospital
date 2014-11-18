@@ -1,14 +1,12 @@
 package logic;
 
 
-import java.util.ArrayList;
-
-import testJUnit.Tests;
+import static logic.OperationsWithCards.getOperationWithCard;
+import static logic.OperationsWithUsers.getOperationWithUsers;
 import hibernate.Card;
 import hibernate.Gender;
 import hibernate.User;
-import static logic.OperationsWithUsers.getOperationWithUsers;
-import static logic.OperationsWithCards.getOperationWithCard;
+import testJUnit.Tests;
 
 public class Test {
 
