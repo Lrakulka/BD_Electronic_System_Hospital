@@ -5,6 +5,7 @@ import hibernateConnect.DatabaseConnect;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -45,7 +46,7 @@ public class Card extends CommonField {
 	@Type(type = "boolean")
 	private Boolean isAgain;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="card")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "card", cascade = CascadeType.ALL)
     private Set<hibernate.Session> sessions;
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="card")

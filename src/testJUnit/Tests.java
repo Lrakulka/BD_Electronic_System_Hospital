@@ -17,8 +17,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import logic.OperationWithNotes;
-
 import org.hibernate.Session;
 import org.junit.After;
 import org.junit.Before;

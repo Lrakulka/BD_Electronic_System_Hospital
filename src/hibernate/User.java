@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,7 +40,7 @@ public class User extends CommonField{
 	@Column(name = "pwd")
     private String pwd;
     
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="user")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="user", cascade = CascadeType.ALL)
 	//(fetch = FetchType.EAGER, mappedBy="user", cascade = CascadeType.ALL)
     private Set<Note> notes;
 	

@@ -2,18 +2,18 @@
 <%@ page import="logic.OperationsWithUsers"%>
 <%@ page import="hibernate.User"%>
 <%@ page import="java.util.*, java.text.*" %>
-<%@ page contentType="text/html; charset=windows-1251" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
 <html>
 <head>
     <title>
-        ������� ������������
+        Таблиця користувачів
     </title>
 </head> 
 <body>
     <form action="LogOutServlet" method="post">
-	<input type="submit" value="Logout" >
+	<input type="submit" value="Вийти" >
 	</form>
-	<a href="StartPage.jsp"><button>Main page</button></a>
+	<a href="StartPage.jsp"><button>Головна сторінка</button></a>
    <%  if (request.getParameter("ButtonDelete") != null) {
 	    	User user = new User();
 	    	user.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
@@ -22,11 +22,11 @@
 		if (request.getParameter("ButtonModify") != null) {
     		request.getSession().setAttribute("ButtonModify", Integer.
     				valueOf(request.getParameter("ButtonModify")));
-    		response.sendRedirect("AddModifyUser.jsp");
+    		response.sendRedirect("ModifyUser.jsp");
     	}
    	
     %>
-    <h1>List of Users</h1>		
+    <h1>Таблиця користувачів</h1>		
     <table border="1" cellpadding="8">	    	
 		<form name="UserListForm" method="post">
 	    	<tr>
@@ -54,13 +54,13 @@
 		    					"el\" size=\"1\" value=\"2\"/></th>");
 		    		}
     			%>
-	            <th><input type="submit" name="submit" value="Use filters" size="15" /></th>
+	            <th><input type="submit" name="submit" value="Використати фільтр" size="15" /></th>
 	        </tr> 
         </form>    
         <tr>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Access level</th>
+            <th>Ім'я</th>
+            <th>Телефон</th>
+            <th>Уравінь доступу</th>
         </tr>      
        	<form name="ModifyUser" method="post">
             <% 	ArrayList<User> users;
@@ -81,14 +81,14 @@
                 out.println("<td>" + users.get(i).getPhone() + "</td>");
                 out.println("<td>" + users.get(i).getAccess_level() + "</td>");  
                 if( users.get(i).equals(AuthorizeUser.getAuthorizeUser()))
-                	out.println("<td>It's you</td>");  
+                	out.println("<td>Це Ви</td>");  
                 else out.println("<td><button name=\"ButtonDelete\" value=\"" +
-                		users.get(i).getId() + "\">Delete</button>" +
+                		users.get(i).getId() + "\">Видалити</button>" +
                 		"<button name=\"ButtonModify\" value=\"" +
-                    	users.get(i).getId() + "\">Modify</button>" + 
+                    	users.get(i).getId() + "\">Редагувати</button>" + 
             			"<button name=\"ButtonenterLikeThisUser\" value=\"" +
-                    	users.get(i).getId() + "\"><font color=\"blue\">Enter" +
-                				" as this user</font></button></td>");  
+                    	users.get(i).getId() + "\"><font color=\"blue\">Увійти" +
+                				" як цей користувач</font></button></td>");  
                 out.println("</tr>");
             } %>
         </form>

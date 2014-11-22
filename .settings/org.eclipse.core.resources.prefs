@@ -1,3 +1,4 @@
 eclipse.preferences.version=1
-encoding//WebContent/AddModifyUser.jsp=UTF-8
 encoding//WebContent/Authorize.jsp=UTF-8
+encoding//WebContent/Disease.jsp=UTF-8
+encoding//WebContent/ModifyUser.jsp=UTF-8

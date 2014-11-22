@@ -5,6 +5,7 @@ import hibernateConnect.DatabaseConnect;
 import java.util.ArrayList;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,7 +31,7 @@ public class Diagnos extends CommonField {
 	@Column(name = "description")
 	private String description;
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy="diagnos")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="diagnos", cascade = CascadeType.ALL)
 	private Set<hibernate.Session> sessions;
 
 	@ManyToOne

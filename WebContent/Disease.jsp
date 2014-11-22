@@ -1,12 +1,11 @@
 <%@page import="hibernate.Disease"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="logic.OperationsWithDiseases"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Diseases</title>
 </head>
 <body>
@@ -25,17 +24,17 @@
 	<form name="saveDisease" method="post">
 		<table cellpadding="3pt">
 			<tr>
-				<td>New Disease name</td>
+				<td>Ім'я нової хвороби</td>
 				<td><input type="text" name="SaveDisease"></td>
-				<td><input type="submit" value="Add"></td>
+				<td><input type="submit" value="Додати"></td>
 			</tr>
 		</table>
 	</form>
 	 <form action="LogOutServlet" method="post">
-		<input type="submit" value="Logout" >
+		<input type="submit" value="Вийти" >
 	</form>
-	<a href="StartPage.jsp"><button>Main page</button></a>
-	<h1>Disease table</h1>
+	<a href="StartPage.jsp"><button>Головна сторінка</button></a>
+	<h1>Таблиця хвороб</h1>
 	<form name="deleteDisease" method="post">
 		<table border="1" cellpadding="8">
 			<tr>
@@ -46,7 +45,7 @@
 				for(int i = 0; i < diseases.size() ; ++i) {
 					out.println("<tr><td>" + diseases.get(i).getName() + "</td><td><button " +
 					"name=\"DeleteDisease\" value=\"" + diseases.get(i).getId() + 
-					"\">Delete</button></td></tr>");
+					"\">Видалити</button></td></tr>");
 				}
 			%>
 		</table>

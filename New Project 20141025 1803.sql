@@ -94,6 +94,7 @@ CREATE TABLE `groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
   `group_id` int(11) NOT NULL,
+  `isHead` bit(1) NOT NULL DEFAULT b'1',
   PRIMARY KEY (`id`),
   KEY `GroupOwner_idx` (`group_id`),
   CONSTRAINT `GroupOwner` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -122,8 +123,8 @@ CREATE TABLE `notes` (
   PRIMARY KEY (`id`),
   KEY `Notes-Users_idx` (`user_id`),
   KEY `Notes-Cars_idx` (`card_id`),
-  CONSTRAINT `Notes-Cars` FOREIGN KEY (`card_id`) REFERENCES `cards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Notes-Users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `Notes-Users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Notes-Cards` FOREIGN KEY (`card_id`) REFERENCES `cards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -147,8 +148,8 @@ CREATE TABLE `sessions` (
   PRIMARY KEY (`id`),
   KEY `Sessions-Cards_idx` (`card_id`),
   KEY `Sessions-Diagnosis_idx` (`diagnosis_id`),
-  CONSTRAINT `Sessions-Cards` FOREIGN KEY (`card_id`) REFERENCES `cards` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `Sessions-Diagnosis` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `Sessions-Cards` FOREIGN KEY (`card_id`) REFERENCES `cards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Sessions-Diagnosis` FOREIGN KEY (`diagnosis_id`) REFERENCES `diagnosis` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
