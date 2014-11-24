@@ -16,34 +16,49 @@ import javax.persistence.Table;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.annotations.GenericGenerator;
+
+/** Цей клас призначений для налаштування Hibernate для 
+ * коректної роботи з таблицею "diseases" із бази даних "hospital" */
 @Entity
 @Table(name="diseases")
 public class Disease extends CommonField {
+	/**Індефікатор даних в таблиці "diseases"*/
 	@Id
     @GeneratedValue(generator="increment")
     @GenericGenerator(name="increment", strategy = "increment")
     @Column(name = "id")	
 	private Integer id;
 	
+	/**Назва звороби в таблиці "diseases"*/
 	@Column(name = "name")
 	private String name;
 	
+	/**Опис зміної масиву даних для витягування всіх діагнозів, які стосуються даної хвороби,
+	 *  із зв'язаної таблиці "diagnosis" по індефікатору "disease", який буде співпадати 
+	 *  з індефікатором "id" поля з таблиці "disease". Відношення один до багатьох
+	 *  */
 	@OneToMany(fetch = FetchType.LAZY, mappedBy="disease")
     private Set<Diagnos> diagnosis;
 	
+	/**Створення об'єкта класа*/
 	public Disease() {
 		
 	}
 	
+	/**Створення об'єкта класа із параметрами
+	 * @param name ім'я хвороби*/
 	public Disease(String name) {
 		this.name = name;
 	}
+	
 	/**
-	  * Project use Lazy initialization that is why class has two methods
-	  * "getDiagnosis" and "getAllDiagnosis". First method return link to diagnosis, 
-	  * second method create session and get data from database and 
-	  * return link to object ArrayList witch contains all diagnosis of 
-	  * current disease.
+	  * Цей проект використовує "Lazy initialization" - це означає, що дані із зв'язаних
+	  * таблиць(діагноз) не завантажуються автоматично, тому в цьому класі два метода для
+	  *  отримання даних. Перший метод "getDiagnosis" повертає структуру даних, якщо ці дані
+	  *   вже завантажені, другий метод "getAllDiagnosis" створює запит до бази даних і 
+	  *   завантажує з неї необхідні дані і повертає структуру з цими даними, що 
+	  *   стосуються поточної хвороби.
+	  *   @return колекцію діагнозів
 	  */
 	public ArrayList<Diagnos> getAllDiagnosis() {
 		ArrayList<Diagnos> listDiagnosis;
@@ -59,10 +74,12 @@ public class Disease extends CommonField {
 		return id;
 	}
 
+	/**@return повертає назву хвороби*/
 	public String getName() {
 		return name;
 	}
 
+	/**@return колекцію діагнозів*/
 	public Set<Diagnos> getDiagnosis() {
 		return diagnosis;
 	}
@@ -71,10 +88,12 @@ public class Disease extends CommonField {
 		this.id = id;
 	}
 
+	/**@param name встановити ім'я хвороби*/
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**@param diagnosis встановити колекцію діагнозів для хвороби*/
 	public void setDiagnosis(Set<Diagnos> diagnosis) {
 		this.diagnosis = diagnosis;
 	}

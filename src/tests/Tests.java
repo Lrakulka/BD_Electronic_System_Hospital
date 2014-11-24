@@ -1,4 +1,4 @@
-package testJUnit;
+package tests;
 
 import static logic.OperationsWithCards.getOperationWithCard;
 import static logic.OperationsWithUsers.getOperationWithUsers;
@@ -22,12 +22,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-
+/**Клас для точочних тестів функціоналу проекту*/
 public class Tests {
 
 	ArrayList<User> users;
 	ArrayList<Card> cards;
 	
+	/**Метод створює об'єкт тестування і задає початкові налаштування*/
 	public Tests() {
 		users = new ArrayList<>();
 		users.add(new User("Porky1",(short) 0, "134321223", "1111"));
@@ -43,6 +44,8 @@ public class Tests {
 			cards.add(new Card("Card" + String.valueOf(i), (short) (30 + i),
 					i % 2 == 0 ? Gender.female : Gender.male, false));
 	}
+	
+	/**Тест на регістрацію карток*/
 	@Test
 	public void testRegisterCard() {
 		getOperationWithUsers().deleteAllObj();
@@ -54,6 +57,7 @@ public class Tests {
 				fail();
 	}
 
+	/**Тест на видалення користувачів*/
 	@Test
 	public void testDeleteUsers() {
 		for(int i = 0; i < users.size(); i++)
@@ -63,6 +67,7 @@ public class Tests {
 				fail();
 	}
 	
+	/**Тест на фільтр користувачів*/
 	@Test
 	public void testUsersFiltr() {
 		getOperationWithUsers().deleteAllObj();
@@ -80,6 +85,7 @@ public class Tests {
 			fail();
 	}
 	
+	/**Тест на оновлення даних користувачів*/
 	@Test
 	public void testUpdateUser() {
 		getOperationWithUsers().deleteAllObj();
@@ -91,6 +97,7 @@ public class Tests {
 				fail();
 	}
 	
+	/**Тест на витягувування даних з бази даних*/
 	@Test
 	public void testGetUsers() {
 		getOperationWithUsers().deleteAllObj();
@@ -102,6 +109,7 @@ public class Tests {
 			assertTrue(usersP.get(i).equals(users.get(i)));
 	}
 	
+	/**Тест на регістрацію карток*/
 	@Test
 	public void testRegisteCards() {
 		getOperationWithCard().deleteAllObj();
@@ -112,6 +120,8 @@ public class Tests {
 			if(getOperationWithCard().isRegisted(cards.get(i)) == null)
 				fail();
 	}
+	
+	/**Тест на видалити картки*/
 	@Test
 	public void testDeleteCards() {
 		for(int i = 0; i < cards.size(); i++)
@@ -121,6 +131,7 @@ public class Tests {
 				fail();
 	}
 	
+	/**Тест на використання фільтра карток*/
 	@Test
 	public void testCardFiltr() {
 		getOperationWithCard().deleteAllObj();
@@ -138,6 +149,7 @@ public class Tests {
 			fail();
 	}
 	
+	/**Тест на оновлення карток*/
 	@Test
 	public void testUpdateCard() {
 		getOperationWithCard().deleteAllObj();
@@ -149,6 +161,7 @@ public class Tests {
 				fail();
 	}
 	
+	/**Тест на витягування карток із бази даних*/
 	@Test
 	public void testGetCards() {
 		getOperationWithCard().deleteAllObj();
@@ -160,7 +173,8 @@ public class Tests {
 			assertTrue(cardsP.get(i).equals(cards.get(i)));
 	}
 	
-	// I know, looks horrible.
+	/**Комплексний тест на всі таблиці(тестування зв'язку між таблицями*/
+	// Я знаю виглядає жахливо.
 	@Test
 	public void testRelationship() {
 		
@@ -168,25 +182,24 @@ public class Tests {
         session.beginTransaction();
         int size = 2;
         User[] user = new User[size];
-        user[0] = new User("Svin Petr",(short) 0, "+43345676543", "qwerty");
-        user[1] = new User("Svin Baca",(short) 0, "+97532642225", "ytrewq");
+        user[0] = new User("Свиненко Петро Висильович",(short) 0, "+380314567849", "1234");
+        user[1] = new User("Хабрович Вадим Петрович",(short) 0, "+38076589165", "4321");
         Note[] note = new Note[size];
-        note[0] = new Note(false, Date.valueOf("2000-11-01"), "This is test of hibernete" +
-        		" relationship");
-        note[1] = new Note(true, Date.valueOf("2012-11-04"), "This is test of hibernete" +
-        		" relationship");
-        Card card = new Card("Bacilev Andrey", (short) 28, Gender.male, false);
+        note[0] = new Note(false, Date.valueOf("2000-09-01"), "Хворий скаржиться на біль у голові");
+        note[1] = new Note(true, Date.valueOf("2012-11-04"), "Хворий має проблеми із орінтацією");
+        Card card = new Card("Бочко Андій Вікторович", (short) 28, Gender.male, true);
+        card.setNote("Хворий досить дивний. Будьте уважні.");
         hibernate.Session[] sessions = new hibernate.Session[size];
         sessions[0] = new hibernate.Session();
         sessions[1] = new hibernate.Session();
         sessions[0].setResult(true);
         sessions[1].setResult(false);
         Diagnos[] diagnos = new Diagnos[2];
-        diagnos[0] = new Diagnos("U bolnogo otsustvuet mozg");
-        diagnos[1] = new Diagnos("U bolnogo snova otsustvuet mozg");
+        diagnos[0] = new Diagnos("У хворого відсутній мозок");
+        diagnos[1] = new Diagnos("У хворого стався інцест. Мозок знову відсутній");
         Disease[] disease = new Disease[2];
-        disease[0] = new Disease("Net mozga.Netu golovnogo mozga");
-        disease[1] = new Disease("Net mozga.Netu prodolgovatogo mozga");
+        disease[0] = new Disease("Немає мозку. Немає головного мозку");
+        disease[1] = new Disease("Немає мозку. Немає довгого мозку");
 
         for(int i = 0; i < size; ++i) {
         	diagnos[i].setDisease(disease[i]);
@@ -215,7 +228,6 @@ public class Tests {
 
 			@Override
 			public int compare(Note arg0, Note arg1) {
-				// TODO Auto-generated method stub
 				if(arg0.getId() > arg1.getId())
 					return 1;
 				else return -1;
@@ -227,7 +239,6 @@ public class Tests {
 
 			@Override
 			public int compare(hibernate.Session arg0, hibernate.Session arg1) {
-				// TODO Auto-generated method stub
 				if(arg0.getId() > arg1.getId())
 					return 1;
 				else return -1;
@@ -241,7 +252,7 @@ public class Tests {
         	Diagnos diagnosD = sessionD.getDiagnos();
         	Disease diseaseD = diagnosD.getDisease();
         	
-        	assertTrue(user[i].equals(userD));
+        	assertTrue(user[i].equals((Object) userD));
         	assertTrue(note[i].equals(noteD));
         	assertTrue(card.equals(cardD));
         	assertTrue(sessions[i].equals(sessionD));        	
@@ -250,6 +261,7 @@ public class Tests {
         }
 	}
 	
+	/**Метод очищає базу даних перед ткстом і після*/
 	@Before
 	@After
 	public void cleanAllTables() {

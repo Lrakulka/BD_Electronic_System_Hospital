@@ -9,8 +9,9 @@
 <title>Diseases</title>
 </head>
 <body>
-	<h1>Add Disease</h1>
-	<%	if (request.getParameter("SaveDisease") != null) {
+	<h1>Додати хворобу</h1>
+	<%	request.setCharacterEncoding("utf8");
+		if (request.getParameter("SaveDisease") != null) {
 			Disease disease = new Disease();
 			disease.setName(request.getParameter("SaveDisease"));
 			OperationsWithDiseases.getOperationsWithDiseases().register(disease);
@@ -38,7 +39,7 @@
 	<form name="deleteDisease" method="post">
 		<table border="1" cellpadding="8">
 			<tr>
-				<td>Disease name</td>
+				<td>Назва хвороби</td>
 			</tr>
 			<%	ArrayList<Disease> diseases = OperationsWithDiseases.
 					getOperationsWithDiseases().getAllObj();

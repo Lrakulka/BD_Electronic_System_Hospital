@@ -8,6 +8,13 @@
 </head>
 <body>
 	<h1>Вхід в систему</h1>
+	<%     
+    	String value = (String) session.getAttribute("ErrorLogIn");
+    	if (value != null && value.equals("TRUE") && !AuthorizeUser.isAuthorizeUser()) {
+    		out.println("<h1><font color=\"red\">Неправельний пароль або логін або рівеь доступу не підходить</font></h1>");    
+    		session.removeAttribute("ErrorLogIn");
+    	}
+    %>
     <form action="LogIn" method="post">
         <table cellpadding="3pt">
             <tr> 
@@ -22,12 +29,5 @@
         <p />
         <input type="submit" value="Увійти" />
     </form>
-    <%     
-    	String value = (String) session.getAttribute("ErrorLogIn");
-    	if (value != null && value.equals("TRUE") && !AuthorizeUser.isAuthorizeUser()) {
-    		out.println("<h1><font color=\"red\">Неправельний пароль або логін або рівеь доступу не підходить</font></h1>");    
-    		session.removeAttribute("ErrorLogIn");
-    	}
-    %>
 </body>
 </html>

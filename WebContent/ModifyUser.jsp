@@ -13,7 +13,8 @@
 </head>
 <body>
 	<%!	User user;%>
-	<%	user = new User("", null, "", "");
+	<%	request.setCharacterEncoding("utf8");
+		user = new User("", null, "", "");
 	 	if  
 	 	(request.getParameter("ButtonCardOpen") != null) {
 			request.getSession().setAttribute("ButtonModify", 
@@ -92,7 +93,7 @@
     <form action="LogOutServlet" method="post">
 		<input type="submit" value="Вийти" >
 	</form>
-	<a href="StartPage.jsp"><button>Main page</button></a>
+	<a href="StartPage.jsp"><button>Головна сторінка</button></a>
 	<% if (request.getParameter("UserAdd") == null) {
 			out.println("<h1>Нотатки</h1>");
 			ArrayList<Note> notes = user.getAllNotes();

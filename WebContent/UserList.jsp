@@ -14,7 +14,8 @@
 	<input type="submit" value="Вийти" >
 	</form>
 	<a href="StartPage.jsp"><button>Головна сторінка</button></a>
-   <%  if (request.getParameter("ButtonDelete") != null) {
+   <%  request.setCharacterEncoding("utf8");
+   		if (request.getParameter("ButtonDelete") != null) {
 	    	User user = new User();
 	    	user.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
 	    	OperationsWithUsers.getOperationWithUsers().deleteById(user);
@@ -80,7 +81,7 @@
                 out.println("<td>" + users.get(i).getName() + "</td>");
                 out.println("<td>" + users.get(i).getPhone() + "</td>");
                 out.println("<td>" + users.get(i).getAccess_level() + "</td>");  
-                if( users.get(i).equals(AuthorizeUser.getAuthorizeUser()))
+                if( users.get(i).equals((Object) AuthorizeUser.getAuthorizeUser()))
                 	out.println("<td>Це Ви</td>");  
                 else out.println("<td><button name=\"ButtonDelete\" value=\"" +
                 		users.get(i).getId() + "\">Видалити</button>" +

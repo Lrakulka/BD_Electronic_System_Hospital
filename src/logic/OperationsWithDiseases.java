@@ -8,19 +8,25 @@ import org.hibernate.criterion.Restrictions;
 import hibernate.Disease;
 import logic.OperationsWithDiseases.Filtr;
 public class OperationsWithDiseases extends CommonOperations<Disease, Filtr> {
-	
+	/**Клас, що описує поля таблиці, які будуть використовуватися для фільтру*/
 	class Filtr {
 		private String name;
 		
+		/**Створення об'єкта класа із параметрами
+		 * @param name ім'я хвороби*/
 		Filtr(String name) {
 			this.name = name;
 		}
 	}
 
+	/**Поле призначене для зберігання силки на об'єкт цього класу*/
 	private static OperationsWithDiseases oper = null;
 	
+	/**Метод створюэ об'єкт цього класу*/
 	private OperationsWithDiseases() {}
 	
+	/**Метод повертає об'єкт цього класу
+	 *  @return повертає об'єкт класу*/
 	public static OperationsWithDiseases getOperationsWithDiseases() {
 		if (oper == null)
 			oper = new OperationsWithDiseases();
@@ -49,7 +55,6 @@ public class OperationsWithDiseases extends CommonOperations<Disease, Filtr> {
 
 	@Override
 	boolean isRegistedMethodNotNeed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

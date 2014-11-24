@@ -14,7 +14,8 @@
 	<input type="submit" value="Вийти" >
 	</form>
 	<a href="StartPage.jsp"><button>Головна сторінка</button></a>
-   <%  if (request.getParameter("ButtonDelete") != null) {
+   <%  request.setCharacterEncoding("utf8");
+  	   if (request.getParameter("ButtonDelete") != null) {
 	    	Card card = new Card();
 	    	card.setId(Integer.valueOf(request.getParameter("ButtonDelete")));
 	    	OperationsWithCards.getOperationWithCard().deleteById(card);

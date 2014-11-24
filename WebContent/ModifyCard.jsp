@@ -20,7 +20,8 @@
 </head>
 <body>
 	<%! Card card;%>
-	<%	card = new Card();
+	<%	request.setCharacterEncoding("utf8");
+		card = new Card();
 		if (request.getParameter("ButtonSessionsDelete") != null) {
 			Session sess = new Session();
 			sess.setId(Integer.valueOf(request.getParameter("ButtonSessionsDelete")));
@@ -45,7 +46,7 @@
 		card = OperationsWithCards.getOperationWithCard().isRegisted(card);
 	%>
 	<h1>Картка</h1>
-	<form name="CardDate">
+	<form name="CardDate" method="post">
 		<table>
 			<tr><td>Ім'я:</td><td><input type="text" name="CardName" 
 			value="<%=card.getName() %>"></td></tr>
@@ -58,7 +59,7 @@
 			<tr><td>Вперше:</td><td><input type="checkbox" name="CardIsAgain" 
 			value="<%=card.getIsAgain() %>"
 			 <%=card.getIsAgain().equals(true) ? "checked" : "" %>></td></tr>
-			<tr><td>Нотатки:</td><td><textarea cols="40" rows="5" name="CardNote"><%=card.getNote()%></textarea></td></tr>
+			<tr><td>Нотаток:</td><td><textarea cols="40" rows="5" name="CardNote"><%=card.getNote()%></textarea></td></tr>
 		</table>
 		<button name="ButtonSave" value="Save">Зберегти</button>
 		<button name="ButtonCencel" value="Cancel">Відмінити</button>

@@ -13,22 +13,33 @@ import org.hibernate.criterion.Restrictions;
 
 public class OperationsWithUsers extends CommonOperations<User, Filtr> {
 
+	/**Поле призначене для зберігання силки на об'єкт цього класу*/
 	private static OperationsWithUsers operWithUsers = null;
 	
+	/**Метод створюэ об'єкт цього класу*/
 	private OperationsWithUsers() {}
 	
+	/**Метод повертає об'єкт цього класу
+	 *  @return повертає об'єкт класу*/
 	public static OperationsWithUsers getOperationWithUsers() {
 		if (operWithUsers == null)
 			operWithUsers = new OperationsWithUsers();
 		return operWithUsers;
 	}
 	
+	/**Клас, що описує поля таблиці, які будуть використовуватися для фільтру*/
 	class Filtr {
 		private String name;
 		private String phone;
 		private Short access_levelLow;
 		private Short access_levelHight;
 		
+		/**Створення об'єкта класа із параметрами
+		 * @param name ім'я користувача
+		 * @param access_levelLow нижчий рівень доступу користувача
+		 * @param access_levelHight вищий рівень доступу користувача
+		 * @param phone телефон користувача
+		 * @param pwd пароль користувача*/
 		Filtr(String name, String pwd,
 				String phone, Short access_levelLow, Short access_levelHight) {
 			this.name = name;
@@ -64,6 +75,12 @@ public class OperationsWithUsers extends CommonOperations<User, Filtr> {
 		return session.createCriteria(User.class);
 	}
 	
+	/**Метод для отримання всіх даних з таблиці, що задовільняєть фільтр {@link getFiltrCriteria} 
+	 * @param name задання ім'я користувача
+	 * @param phone задання телефону користувача
+	 * @param access_levelLow задання нижчого порогу доступу
+	 * @param access_levelHight задання вищого порогу доступу
+	 * @return колекцію користувачів*/
 	public ArrayList<User> getAllObjSatisfyFiltr(String name, 
 			String phone, Short access_levelLow, Short access_levelHight) {
 		return getAllObjSatisfyFiltr(new Filtr(name, null, phone, access_levelLow,
@@ -72,7 +89,6 @@ public class OperationsWithUsers extends CommonOperations<User, Filtr> {
 
 	@Override
 	boolean isRegistedMethodNotNeed() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 }

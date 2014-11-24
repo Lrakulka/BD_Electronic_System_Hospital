@@ -13,16 +13,21 @@ import org.hibernate.criterion.Restrictions;
 
 public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 
+	/**Поле призначене для зберігання силки на об'єкт цього класу*/
 	private static OperationsWithCards oper = null;
 	
+	/**Метод створюэ об'єкт цього класу*/
 	private OperationsWithCards() {}
 	
+	/**Метод повертає об'єкт цього класу
+	 * @return повертає об'єкт класу*/
 	public static OperationsWithCards getOperationWithCard() {
 		if(oper == null)
 			oper = new OperationsWithCards();
 		return oper;
 	}
 	
+	/**Клас, що описує поля таблиці, які будуть використовуватися для фільтру*/
 	class Filtr{
 		private String name;
 		private Short age_low;
@@ -30,6 +35,13 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 		private Gender sex;
 		private Boolean isAgain;
 		
+		/**Створення об'єкта класа із заданням полів 
+		 * @param name ім'я пацієнта цієї картки
+		 * @param age_levelLow нижчий вік пацієнта цієї картки
+		 * @param age_levelHight вищий вік пацієнта цієї картки
+		 * @param gender стать пацієнта цієї картки
+		 * @param isAgain чи вперше пацієнт
+		 * */
 		Filtr(String name, 
 				Gender gender, Short age_levelLow, Short age_levelHight, Boolean isAgain) {
 			this.name = name;
@@ -69,7 +81,14 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 	Criteria getAllObjCriteria(Session session) {
 		return session.createCriteria(Card.class);
 	}
-
+	
+	/**Метод для отримання всіх даних з таблиці, що задовільняєть фільтр {@link getFiltrCriteria} 
+	 * @param name задання ім'я хворого
+	 * @param gender задання статі хворого
+	 * @param age_levelLow задання нижчого порогу віку
+	 * @param age_levelHight задання вищого порогу віку
+	 * @param isAgain задання чи хворий не вперше
+	 * @return колекцію карт*/
 	public ArrayList<Card> getAllCardsFiltr(String name, 
 			Gender gender, Short age_levelLow, Short age_levelHight, Boolean isAgain) {
 		return getAllObjSatisfyFiltr(new Filtr(name, gender, age_levelLow,
@@ -78,7 +97,6 @@ public class OperationsWithCards extends CommonOperations<Card, Filtr> {
 
 	@Override
 	boolean isRegistedMethodNotNeed() {
-		// TODO Auto-generated method stub
 		return false;
 	}	
 }

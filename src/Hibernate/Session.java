@@ -10,22 +10,28 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Type;
 
+/** Цей клас призначений для налаштування Hibernate для 
+ * коректної роботи з таблицею "sessions" із бази даних "hospital" */
 @Entity
 @Table(name="sessions")
 public class Session extends CommonField {
+	/**Індефікатор даних в таблиці "sessions"*/
 	@Id
     @GeneratedValue
     @Column(name = "id")
 	private Integer id;
 	
+	/**Результат сесії лікування*/
 	@Column(name = "result")
 	@Type(type = "boolean")
 	private Boolean result;
 	
+	/**Зв'язний параметр з таблицею "cards". Відношення багато до одного*/
 	@ManyToOne
 	@JoinColumn(name = "card_id")
 	private Card card;
 	
+	/**Зв'язний параметр з таблицею "diagnosis". Відношення багато до одного*/
 	@ManyToOne
     @JoinColumn(name = "diagnosis_id")
     private Diagnos diagnos;
@@ -34,14 +40,17 @@ public class Session extends CommonField {
 		return id;
 	}
 
+	/**@return повертає результат лікування*/
 	public Boolean getResult() {
 		return result;
 	}
-
+	
+	/**@return повертає об'єкт карти*/
 	public Card getCard() {
 		return card;
 	}
 
+	/**@return повертає об'єкт діагнозу*/
 	public Diagnos getDiagnos() {
 		return diagnos;
 	}
@@ -54,10 +63,12 @@ public class Session extends CommonField {
 		this.result = result;
 	}
 
+	/**@param card встановлення об'єкт карти*/
 	public void setCard(Card card) {
 		this.card = card;
 	}
 
+	/**@param diagnos встановлення об'єкт діагнозу*/
 	public void setDiagnos(Diagnos diagnos) {
 		this.diagnos = diagnos;
 	}
